@@ -1,3 +1,6 @@
+const claudeService = require('./claudeService');
+const logger = require('../utils/logger');
+
 /**
  * Tarot Service
  * Business logic for tarot readings and AI interpretation
@@ -9,63 +12,70 @@
  * @param {Array} selectedCards - The selected card documents
  * @param {Array} cards - Cards with position and reversed status
  * @param {String} question - User's question
- * @returns {String} AI interpretation
+ * @param {String} category - Question category (love, career, etc.)
+ * @param {Object} userProfile - User profile for personalization
+ * @returns {Object} AI interpretation with full reading, position readings, message, and advice
  */
-const performTarotReading = async (spread, selectedCards, cards, question) => {
+const performTarotReading = async (spread, selectedCards, cards, question, category = 'general', userProfile = null) => {
   try {
-    // Build the reading context
-    const cardDescriptions = cards.map((cardItem, index) => {
+    // Prepare card data for Claude service
+    const cardsData = cards.map((cardItem, index) => {
       const card = selectedCards[index];
-      const position = spread.positions.find(p => p.position === cardItem.position);
-      const meaning = cardItem.isReversed ? card.reversedMeaning : card.uprightMeaning;
 
-      return `Position ${cardItem.position} - ${position.name} (${position.nameKo}):
-      Card: ${card.name} ${cardItem.isReversed ? '(Reversed)' : '(Upright)'}
-      Meaning: ${meaning}
-      Keywords: ${card.keywords.join(', ')}`;
-    }).join('\n\n');
+      return {
+        position: cardItem.position,
+        isReversed: cardItem.isReversed,
+        card: {
+          _id: card._id,
+          name: card.name,
+          nameKo: card.nameKo,
+          nameShort: card.nameShort,
+          number: card.number,
+          arcana: card.arcana,
+          suit: card.suit,
+          meaningUpright: card.meaningUpright,
+          meaningReversed: card.meaningReversed,
+          keywordsUpright: card.keywordsUpright,
+          keywordsReversed: card.keywordsReversed,
+        },
+      };
+    });
 
-    const prompt = `You are an experienced tarot reader providing insightful interpretations.
+    // Prepare reading data for Claude API
+    const readingData = {
+      question,
+      category,
+      cards: cardsData,
+      spread: {
+        _id: spread._id,
+        name: spread.name,
+        nameKo: spread.nameKo,
+        description: spread.description,
+        cardCount: spread.cardCount,
+        positions: spread.positions,
+      },
+      userProfile: userProfile || { expertiseLevel: 'beginner' },
+    };
 
-Spread: ${spread.name} (${spread.nameKo})
-Description: ${spread.description}
-
-Question: ${question}
-
-Cards drawn:
-${cardDescriptions}
-
-Please provide a comprehensive tarot reading that:
-1. Interprets each card in the context of its position
-2. Explains how the cards relate to each other
-3. Provides meaningful guidance addressing the question
-4. Uses a warm, insightful, and professional tone
-5. Writes in Korean if the question is in Korean, otherwise in English
-
-Keep the interpretation between 300-500 words.`;
-
-    // TODO: Implement actual Anthropic API call in Phase 2
-    // For now, return a placeholder interpretation
-    const interpretation = `[AI Interpretation Placeholder]
-
-This is a temporary interpretation. In Phase 2, this will be replaced with actual AI-powered interpretation using the Anthropic Claude API.
-
-Question: ${question}
-Spread: ${spread.name}
-Number of cards: ${cards.length}
-
-Each card's meaning will be analyzed in depth, considering:
-- The position's significance in the spread
-- Whether the card is upright or reversed
-- How the cards interact with each other
-- Practical guidance for the querent
-
-The interpretation will be warm, insightful, and tailored to your specific question.`;
+    // Call Claude service to generate interpretation
+    logger.info('Generating AI interpretation with Claude API');
+    const interpretation = await claudeService.generateTarotInterpretation(readingData);
 
     return interpretation;
   } catch (error) {
-    console.error('Error in performTarotReading:', error);
-    throw new Error('Failed to generate tarot reading interpretation');
+    logger.error('Error in performTarotReading:', { error: error.message });
+
+    // Generate fallback interpretation if Claude API fails
+    const cardsData = cards.map((cardItem, index) => {
+      const card = selectedCards[index];
+      return {
+        position: cardItem.position,
+        isReversed: cardItem.isReversed,
+        card,
+      };
+    });
+
+    return claudeService.generateFallbackInterpretation(cardsData);
   }
 };
 

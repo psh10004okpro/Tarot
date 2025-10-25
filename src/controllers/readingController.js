@@ -9,8 +9,8 @@ const { performTarotReading } = require('../services/tarotService');
  */
 
 /**
- * @desc    Create new reading
- * @route   POST /api/readings
+ * @desc    Create new reading with AI interpretation
+ * @route   POST /api/v1/readings
  * @access  Private
  */
 const createReading = async (req, res, next) => {
@@ -32,46 +32,67 @@ const createReading = async (req, res, next) => {
       { $sample: { size: spreadDoc.cardCount } },
     ]);
 
-    // Randomly assign reversed status to some cards
-    const cards = selectedCards.map((card, index) => ({
-      card: card._id,
-      position: index + 1,
-      isReversed: Math.random() > 0.7, // 30% chance of reversed
-    }));
+    // Randomly assign reversed status to some cards (30% chance)
+    const cardsWithOrientation = selectedCards.map((card, index) => {
+      const isReversed = Math.random() > 0.7;
+      return {
+        card: card._id,
+        position: index + 1,
+        orientation: isReversed ? 'reversed' : 'upright',
+        isReversed, // For performTarotReading compatibility
+      };
+    });
 
-    // Perform AI interpretation
-    const interpretation = await performTarotReading(
+    // Get user profile for personalized interpretation
+    const userProfile = {
+      expertiseLevel: req.user.profile?.expertiseLevel || 'beginner',
+      preferences: req.user.preferences,
+    };
+
+    // Perform AI interpretation using Claude API
+    const aiInterpretation = await performTarotReading(
       spreadDoc,
       selectedCards,
-      cards,
-      question
+      cardsWithOrientation,
+      question,
+      category || 'general',
+      userProfile
     );
 
-    // Create reading
+    // Prepare cardsDrawn for database (without isReversed field)
+    const cardsDrawn = cardsWithOrientation.map((card) => ({
+      card: card.card,
+      position: card.position,
+      orientation: card.orientation,
+    }));
+
+    // Create reading document
     const reading = await Reading.create({
       user: req.user.id,
       spread,
       question,
-      cards,
-      interpretation,
-      category: category || spreadDoc.category,
+      questionCategory: category || 'general',
+      cardsDrawn,
+      aiInterpretation,
       isPublic: isPublic || false,
       notes,
       tags,
     });
 
-    // Update user reading count
-    req.user.readingCount += 1;
+    // Update user statistics
+    if (req.user.stats) {
+      req.user.stats.totalReadings = (req.user.stats.totalReadings || 0) + 1;
+    }
     await req.user.save();
 
     // Update spread popularity
-    spreadDoc.popularity += 1;
+    spreadDoc.popularity = (spreadDoc.popularity || 0) + 1;
     await spreadDoc.save();
 
     // Populate the reading
     const populatedReading = await Reading.findById(reading._id)
       .populate('spread')
-      .populate('cards.card');
+      .populate('cardsDrawn.card');
 
     res.status(201).json({
       success: true,

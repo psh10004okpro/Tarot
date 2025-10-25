@@ -72,18 +72,32 @@ PORT=3000
 MONGODB_URI=mongodb://localhost:27017/unwoldam
 JWT_SECRET=your_secret_key_here
 JWT_EXPIRE=7d
-ANTHROPIC_API_KEY=your_anthropic_api_key
+
+# Claude API Configuration
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+CLAUDE_MODEL=claude-sonnet-4-20250514
+CLAUDE_MAX_TOKENS=2000
+CLAUDE_TEMPERATURE=0.7
+
+# Rate Limiting
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
 ```
 
-5. Start MongoDB:
+5. Get your Anthropic API key:
+   - Sign up at [Anthropic Console](https://console.anthropic.com/)
+   - Navigate to API Keys section
+   - Create a new API key
+   - Copy the key to your `.env` file as `ANTHROPIC_API_KEY`
+   - **Note**: The API key is required for AI-powered tarot interpretations
+
+6. Start MongoDB:
 ```bash
 # Make sure MongoDB is running
 mongod
 ```
 
-6. Seed the database with initial data:
+7. Seed the database with initial data:
 ```bash
 # Seed with initial cards, spreads, and test users
 npm run seed
@@ -228,12 +242,17 @@ npm run lint:fix
 - Integration tests (Jest + Supertest)
 - Postman collection
 
-### Phase 4: AI Integration (Next)
-- Anthropic Claude API integration
-- Advanced tarot interpretation
-- Context-aware readings
+### Phase 4: AI Integration ✅ Completed
+- Anthropic Claude API integration (Claude Sonnet 4)
+- AI-powered tarot card interpretations in Korean
+- Context-aware readings based on user questions
+- Personalized interpretations by expertise level
+- Position-specific card analysis
+- Automatic retry logic with exponential backoff
+- Fallback interpretation when API unavailable
+- Token usage tracking and cost monitoring
 
-### Phase 5: Advanced Features (Future)
+### Phase 5: Advanced Features (Next)
 - Image upload for cards
 - Public reading sharing
 - User analytics
@@ -272,6 +291,61 @@ MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/unwoldam?
 7. Run the seed command:
 ```bash
 npm run seed
+```
+
+## AI-Powered Interpretation
+
+This API uses **Anthropic's Claude AI** (Sonnet 4) to generate personalized tarot card interpretations.
+
+### Features
+
+- **Korean Language Support**: All interpretations are generated in Korean
+- **Context-Aware**: Considers user's question, card positions, and spread type
+- **Personalized**: Adapts language complexity based on user expertise level (beginner/intermediate/advanced)
+- **Comprehensive Analysis**:
+  - Individual card interpretations for each position
+  - Overall message synthesizing all cards
+  - Practical advice and guidance
+  - Card interactions and patterns (elements, numerology)
+- **Reliable**: Automatic retry with exponential backoff
+- **Fallback**: Basic card meanings if API is unavailable
+
+### Claude API Configuration
+
+```env
+ANTHROPIC_API_KEY=your_key_here       # Required
+CLAUDE_MODEL=claude-sonnet-4-20250514  # Default model
+CLAUDE_MAX_TOKENS=2000                 # Max response length
+CLAUDE_TEMPERATURE=0.7                 # Creativity (0.0-1.0)
+```
+
+### Cost Estimation
+
+- Input: ~500-800 tokens per reading (cards, spread, question)
+- Output: ~1500-2000 tokens per reading (interpretation)
+- Total: ~2000-2800 tokens per reading
+- Approximate cost: $0.015-$0.02 per reading (Claude Sonnet 4 pricing)
+
+### Response Format
+
+```json
+{
+  "aiInterpretation": {
+    "fullReading": "📖 Complete formatted interpretation...",
+    "positionReadings": [
+      {
+        "position": 1,
+        "cardName": "바보",
+        "interpretation": "새로운 시작을 나타냅니다..."
+      }
+    ],
+    "overallMessage": "전체적인 메시지...",
+    "advice": "실천 가능한 조언...",
+    "generatedBy": "claude-sonnet-4-20250514",
+    "generatedAt": "2025-10-25T...",
+    "tokensUsed": 2345
+  }
+}
 ```
 
 ## Data Models
