@@ -1,0 +1,216 @@
+[
+  {
+    "name": "Single Card",
+    "nameKo": "원 카드",
+    "description": "A simple one-card reading for quick daily guidance or insight into a specific question.",
+    "cardCount": 1,
+    "difficulty": "beginner",
+    "category": "general",
+    "positions": [
+      {
+        "position": 1,
+        "name": "The Card",
+        "nameKo": "카드",
+        "description": "Your guidance for today or answer to your question",
+        "interpretationGuide": "Focus on the card's primary meaning and how it relates to the querent's current situation or question."
+      }
+    ],
+    "isPremium": false,
+    "isActive": true
+  },
+  {
+    "name": "Three Card Spread",
+    "nameKo": "쓰리 카드 스프레드",
+    "description": "A versatile three-card spread that can represent Past-Present-Future or Situation-Action-Outcome.",
+    "cardCount": 3,
+    "difficulty": "beginner",
+    "category": "general",
+    "positions": [
+      {
+        "position": 1,
+        "name": "Past / Situation",
+        "nameKo": "과거 / 상황",
+        "description": "The foundation or background of the situation",
+        "interpretationGuide": "Examine what has led to the current moment. What influences from the past are still affecting you?"
+      },
+      {
+        "position": 2,
+        "name": "Present / Action",
+        "nameKo": "현재 / 행동",
+        "description": "The current state or recommended action",
+        "interpretationGuide": "What is happening right now? What action should be taken?"
+      },
+      {
+        "position": 3,
+        "name": "Future / Outcome",
+        "nameKo": "미래 / 결과",
+        "description": "The likely outcome or future direction",
+        "interpretationGuide": "Where is this path leading? What is the potential outcome if current course continues?"
+      }
+    ],
+    "isPremium": false,
+    "isActive": true
+  },
+  {
+    "name": "Love Triangle",
+    "nameKo": "연애 삼각형",
+    "description": "A three-card spread specifically designed for love and relationship questions.",
+    "cardCount": 3,
+    "difficulty": "beginner",
+    "category": "love",
+    "positions": [
+      {
+        "position": 1,
+        "name": "You",
+        "nameKo": "당신",
+        "description": "Your position and feelings in the relationship",
+        "interpretationGuide": "What are you bringing to this relationship? What are your true feelings?"
+      },
+      {
+        "position": 2,
+        "name": "The Other",
+        "nameKo": "상대방",
+        "description": "The other person's position and feelings",
+        "interpretationGuide": "What is the other person feeling? What is their perspective?"
+      },
+      {
+        "position": 3,
+        "name": "The Relationship",
+        "nameKo": "관계",
+        "description": "The nature and potential of the relationship",
+        "interpretationGuide": "What is the essence of this relationship? Where is it heading?"
+      }
+    ],
+    "isPremium": false,
+    "isActive": true
+  },
+  {
+    "name": "Career Path",
+    "nameKo": "커리어 패스",
+    "description": "A five-card spread for career guidance and professional development questions.",
+    "cardCount": 5,
+    "difficulty": "intermediate",
+    "category": "career",
+    "positions": [
+      {
+        "position": 1,
+        "name": "Current Position",
+        "nameKo": "현재 위치",
+        "description": "Your current career situation",
+        "interpretationGuide": "Where are you now in your career? What defines your current professional state?"
+      },
+      {
+        "position": 2,
+        "name": "Strengths",
+        "nameKo": "강점",
+        "description": "Your professional strengths and assets",
+        "interpretationGuide": "What skills and talents can you leverage? What are your professional advantages?"
+      },
+      {
+        "position": 3,
+        "name": "Challenges",
+        "nameKo": "도전과제",
+        "description": "Obstacles or challenges to overcome",
+        "interpretationGuide": "What stands in your way? What challenges must you address?"
+      },
+      {
+        "position": 4,
+        "name": "Advice",
+        "nameKo": "조언",
+        "description": "Guidance for moving forward",
+        "interpretationGuide": "What action should you take? What approach will serve you best?"
+      },
+      {
+        "position": 5,
+        "name": "Potential Outcome",
+        "nameKo": "잠재적 결과",
+        "description": "The likely result of following this path",
+        "interpretationGuide": "Where will this lead? What can you expect if you follow this guidance?"
+      }
+    ],
+    "isPremium": false,
+    "isActive": true
+  },
+  {
+    "name": "Celtic Cross",
+    "nameKo": "켈틱 크로스",
+    "description": "The classic ten-card spread offering comprehensive insight into complex situations.",
+    "cardCount": 10,
+    "difficulty": "advanced",
+    "category": "general",
+    "positions": [
+      {
+        "position": 1,
+        "name": "Present",
+        "nameKo": "현재",
+        "description": "The current situation or question",
+        "interpretationGuide": "What is the heart of the matter? What defines the present moment?"
+      },
+      {
+        "position": 2,
+        "name": "Challenge",
+        "nameKo": "도전",
+        "description": "The immediate challenge or obstacle",
+        "interpretationGuide": "What crosses or opposes you? What is the immediate challenge to face?"
+      },
+      {
+        "position": 3,
+        "name": "Foundation",
+        "nameKo": "기반",
+        "description": "The basis or root of the situation",
+        "interpretationGuide": "What is beneath this? What are the underlying factors?"
+      },
+      {
+        "position": 4,
+        "name": "Recent Past",
+        "nameKo": "최근 과거",
+        "description": "Recent events that are passing",
+        "interpretationGuide": "What has just happened? What is moving into the past?"
+      },
+      {
+        "position": 5,
+        "name": "Crown",
+        "nameKo": "왕관",
+        "description": "Potential or what crowns you",
+        "interpretationGuide": "What is possible? What are you moving towards?"
+      },
+      {
+        "position": 6,
+        "name": "Near Future",
+        "nameKo": "가까운 미래",
+        "description": "What is coming into being",
+        "interpretationGuide": "What is approaching? What will manifest soon?"
+      },
+      {
+        "position": 7,
+        "name": "Your Approach",
+        "nameKo": "당신의 접근",
+        "description": "Your attitude or approach to the situation",
+        "interpretationGuide": "How are you handling this? What is your position or attitude?"
+      },
+      {
+        "position": 8,
+        "name": "External Influences",
+        "nameKo": "외부 영향",
+        "description": "External factors and people affecting the situation",
+        "interpretationGuide": "What external forces are at play? Who or what influences this situation?"
+      },
+      {
+        "position": 9,
+        "name": "Hopes and Fears",
+        "nameKo": "희망과 두려움",
+        "description": "Your hopes, fears, or expectations",
+        "interpretationGuide": "What do you hope for or fear? What are your expectations?"
+      },
+      {
+        "position": 10,
+        "name": "Final Outcome",
+        "nameKo": "최종 결과",
+        "description": "The ultimate outcome",
+        "interpretationGuide": "Where does this all lead? What is the final outcome?"
+      }
+    ],
+    "isPremium": true,
+    "isActive": true
+  }
+]

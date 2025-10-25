@@ -1,0 +1,663 @@
+[
+  {
+    "nameShort": "AR00",
+    "name": "The Fool",
+    "nameKo": "광대",
+    "arcana": "Major",
+    "suit": null,
+    "number": 0,
+    "meaningUpright": [
+      "새로운 시작", "순수함", "자유로운 영혼", "모험", "잠재력"
+    ],
+    "meaningReversed": [
+      "무모함", "위험한 행동", "어리석은 선택", "방향 상실"
+    ],
+    "keywordsUpright": ["시작", "모험", "순수", "자유", "가능성"],
+    "keywordsReversed": ["무모", "경솔", "위험", "미숙"],
+    "descriptionShort": "새로운 여정의 시작을 상징하는 카드입니다.",
+    "descriptionLong": "광대는 타로의 여정이 시작되는 0번 카드로, 무한한 가능성과 새로운 시작을 상징합니다. 순수한 마음으로 미지의 세계로 발을 내딛는 용기를 나타냅니다.",
+    "element": null,
+    "symbolism": ["백장미", "작은 개", "절벽", "하얀 태양", "배낭"],
+    "questionsToAsk": [
+      "어떤 새로운 모험을 시작할 준비가 되어 있나요?",
+      "당신의 순수한 꿈은 무엇인가요?",
+      "두려움 없이 시도해보고 싶은 것은?"
+    ],
+    "affirmation": "나는 새로운 시작을 기꺼이 받아들입니다.",
+    "fortunetellingKo": ["새로운 만남", "여행 운", "전환기"],
+    "relatedHanja": "무극(無極)",
+    "astrology": "Uranus",
+    "numerology": "0 - 무한의 가능성",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR01",
+    "name": "The Magician",
+    "nameKo": "마법사",
+    "arcana": "Major",
+    "suit": null,
+    "number": 1,
+    "meaningUpright": [
+      "의지력", "창조", "기술", "자신감", "행동력"
+    ],
+    "meaningReversed": [
+      "속임수", "조작", "재능 낭비", "우유부단함"
+    ],
+    "keywordsUpright": ["창조", "의지", "능력", "시작", "행동"],
+    "keywordsReversed": ["기만", "조작", "무능력", "낭비"],
+    "descriptionShort": "창조적 힘과 의지의 발현을 나타냅니다.",
+    "descriptionLong": "마법사는 4원소(컵, 지팡이, 검, 펜타클)를 다루며 의지와 행동을 통해 현실을 창조하는 힘을 상징합니다.",
+    "element": "Air",
+    "symbolism": ["무한대 기호", "4원소 도구", "뱀 허리띠", "꽃"],
+    "questionsToAsk": [
+      "당신의 재능을 어떻게 활용하고 있나요?",
+      "무엇을 창조하고 싶으신가요?"
+    ],
+    "affirmation": "나는 내 삶의 창조자입니다.",
+    "fortunetellingKo": ["성공 운", "능력 발휘", "새 프로젝트"],
+    "relatedHanja": "창조(創造)",
+    "astrology": "Mercury",
+    "numerology": "1 - 시작과 의지",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR02",
+    "name": "The High Priestess",
+    "nameKo": "여사제",
+    "arcana": "Major",
+    "suit": null,
+    "number": 2,
+    "meaningUpright": [
+      "직관", "내면의 목소리", "신비", "무의식", "지혜"
+    ],
+    "meaningReversed": [
+      "비밀", "직관 무시", "내면과의 단절"
+    ],
+    "keywordsUpright": ["직관", "신비", "지혜", "무의식", "영성"],
+    "keywordsReversed": ["비밀", "단절", "억압", "혼란"],
+    "descriptionShort": "내면의 지혜와 직관을 상징합니다.",
+    "descriptionLong": "여사제는 의식과 무의식의 경계에 앉아 내면의 신비와 직관적 지혜를 나타냅니다.",
+    "element": "Water",
+    "symbolism": ["달의 왕관", "토라", "석류", "십자가", "기둥"],
+    "questionsToAsk": [
+      "당신의 직관이 말하는 것은 무엇인가요?",
+      "내면의 목소리에 귀 기울이고 있나요?"
+    ],
+    "affirmation": "나는 내면의 지혜를 신뢰합니다.",
+    "fortunetellingKo": ["직감이 중요", "비밀", "영적 성장"],
+    "relatedHanja": "지혜(智慧)",
+    "astrology": "Moon",
+    "numerology": "2 - 이원성과 균형",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR03",
+    "name": "The Empress",
+    "nameKo": "여황제",
+    "arcana": "Major",
+    "suit": null,
+    "number": 3,
+    "meaningUpright": [
+      "풍요", "창조성", "양육", "자연", "번영"
+    ],
+    "meaningReversed": [
+      "의존", "질식", "창조성 결여"
+    ],
+    "keywordsUpright": ["풍요", "양육", "창조", "자연", "사랑"],
+    "keywordsReversed": ["의존", "질식", "불임", "정체"],
+    "descriptionShort": "풍요와 창조적 번영을 상징합니다.",
+    "descriptionLong": "여황제는 자연의 풍요로움과 모성적 사랑, 창조적 에너지를 나타냅니다.",
+    "element": "Earth",
+    "symbolism": ["비너스 기호", "곡물", "왕관", "강", "숲"],
+    "questionsToAsk": [
+      "어떤 것을 키우고 양육하고 있나요?",
+      "당신의 창조적 에너지는 어디에 흐르고 있나요?"
+    ],
+    "affirmation": "나는 풍요와 사랑을 창조합니다.",
+    "fortunetellingKo": ["재물 운", "출산", "풍족함"],
+    "relatedHanja": "풍요(豊饒)",
+    "astrology": "Venus",
+    "numerology": "3 - 창조와 성장",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR04",
+    "name": "The Emperor",
+    "nameKo": "황제",
+    "arcana": "Major",
+    "suit": null,
+    "number": 4,
+    "meaningUpright": [
+      "권위", "구조", "리더십", "안정", "아버지"
+    ],
+    "meaningReversed": [
+      "독재", "경직", "권위 남용", "불안정"
+    ],
+    "keywordsUpright": ["권위", "구조", "통제", "안정", "리더십"],
+    "keywordsReversed": ["독재", "경직", "폭군", "불안"],
+    "descriptionShort": "질서와 권위, 리더십을 나타냅니다.",
+    "descriptionLong": "황제는 확고한 질서와 구조, 부성적 권위와 리더십을 상징합니다.",
+    "element": "Fire",
+    "symbolism": ["왕좌", "숫양", "홀", "황금 갑옷", "산"],
+    "questionsToAsk": [
+      "당신의 삶에 어떤 구조가 필요한가요?",
+      "어디서 리더십을 발휘해야 하나요?"
+    ],
+    "affirmation": "나는 내 삶의 확고한 기반을 세웁니다.",
+    "fortunetellingKo": ["승진", "권력", "안정"],
+    "relatedHanja": "권위(權威)",
+    "astrology": "Aries",
+    "numerology": "4 - 구조와 안정",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR05",
+    "name": "The Hierophant",
+    "nameKo": "교황",
+    "arcana": "Major",
+    "suit": null,
+    "number": 5,
+    "meaningUpright": [
+      "전통", "영적 지혜", "교육", "종교", "관습"
+    ],
+    "meaningReversed": [
+      "반항", "비순응", "새로운 방법"
+    ],
+    "keywordsUpright": ["전통", "교육", "영성", "관습", "지도"],
+    "keywordsReversed": ["반항", "혁신", "비순응", "자유"],
+    "descriptionShort": "영적 가르침과 전통을 상징합니다.",
+    "descriptionLong": "교황은 영적 권위와 전통적 지혜, 정통적 가르침을 나타냅니다.",
+    "element": "Earth",
+    "symbolism": ["교황관", "열쇠", "십자가", "기둥", "제자들"],
+    "questionsToAsk": [
+      "어떤 전통이나 가르침이 도움이 될까요?",
+      "멘토나 스승이 필요한가요?"
+    ],
+    "affirmation": "나는 지혜의 전통을 존중합니다.",
+    "fortunetellingKo": ["결혼", "종교", "교육"],
+    "relatedHanja": "전통(傳統)",
+    "astrology": "Taurus",
+    "numerology": "5 - 변화와 도전",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR06",
+    "name": "The Lovers",
+    "nameKo": "연인",
+    "arcana": "Major",
+    "suit": null,
+    "number": 6,
+    "meaningUpright": [
+      "사랑", "조화", "선택", "관계", "결합"
+    ],
+    "meaningReversed": [
+      "불화", "잘못된 선택", "불균형"
+    ],
+    "keywordsUpright": ["사랑", "조화", "선택", "관계", "연합"],
+    "keywordsReversed": ["불화", "갈등", "후회", "분리"],
+    "descriptionShort": "사랑과 중요한 선택을 상징합니다.",
+    "descriptionLong": "연인 카드는 깊은 사랑의 관계와 인생의 중요한 선택의 순간을 나타냅니다.",
+    "element": "Air",
+    "symbolism": ["천사", "아담과 이브", "지식의 나무", "불의 나무", "태양"],
+    "questionsToAsk": [
+      "당신의 가치관과 일치하는 선택을 하고 있나요?",
+      "중요한 관계에서 조화를 이루고 있나요?"
+    ],
+    "affirmation": "나는 사랑과 조화를 선택합니다.",
+    "fortunetellingKo": ["연애 운", "결혼", "중요한 선택"],
+    "relatedHanja": "사랑(愛)",
+    "astrology": "Gemini",
+    "numerology": "6 - 조화와 균형",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR07",
+    "name": "The Chariot",
+    "nameKo": "전차",
+    "arcana": "Major",
+    "suit": null,
+    "number": 7,
+    "meaningUpright": [
+      "의지", "승리", "통제", "결단력", "방향"
+    ],
+    "meaningReversed": [
+      "통제 상실", "방향 상실", "공격성"
+    ],
+    "keywordsUpright": ["의지", "승리", "결단", "통제", "전진"],
+    "keywordsReversed": ["혼란", "상실", "좌절", "공격"],
+    "descriptionShort": "의지와 승리, 전진을 나타냅니다.",
+    "descriptionLong": "전차는 강한 의지력과 결단력으로 목표를 향해 전진하는 승리를 상징합니다.",
+    "element": "Water",
+    "symbolism": ["두 스핑크스", "별들의 왕관", "갑옷", "도시", "달"],
+    "questionsToAsk": [
+      "어떤 목표를 향해 전진하고 있나요?",
+      "내면의 갈등을 통제하고 있나요?"
+    ],
+    "affirmation": "나는 확고한 의지로 전진합니다.",
+    "fortunetellingKo": ["승리", "여행", "성취"],
+    "relatedHanja": "승리(勝利)",
+    "astrology": "Cancer",
+    "numerology": "7 - 정신적 완성",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR08",
+    "name": "Strength",
+    "nameKo": "힘",
+    "arcana": "Major",
+    "suit": null,
+    "number": 8,
+    "meaningUpright": [
+      "내면의 힘", "용기", "인내", "자비", "부드러운 힘"
+    ],
+    "meaningReversed": [
+      "자신감 결여", "약함", "자제력 상실"
+    ],
+    "keywordsUpright": ["힘", "용기", "인내", "자비", "온유"],
+    "keywordsReversed": ["약함", "자제력 상실", "의심", "불안"],
+    "descriptionShort": "내면의 힘과 용기를 상징합니다.",
+    "descriptionLong": "힘 카드는 폭력이 아닌 사랑과 인내로 상황을 다스리는 내면의 힘을 나타냅니다.",
+    "element": "Fire",
+    "symbolism": ["사자", "무한대 기호", "꽃다발", "산", "여인"],
+    "questionsToAsk": [
+      "어떻게 부드럽게 힘을 발휘할 수 있나요?",
+      "용기가 필요한 상황은 무엇인가요?"
+    ],
+    "affirmation": "나는 사랑으로 모든 것을 다스립니다.",
+    "fortunetellingKo": ["건강", "용기", "극복"],
+    "relatedHanja": "용기(勇氣)",
+    "astrology": "Leo",
+    "numerology": "8 - 힘과 균형",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR09",
+    "name": "The Hermit",
+    "nameKo": "은둔자",
+    "arcana": "Major",
+    "suit": null,
+    "number": 9,
+    "meaningUpright": [
+      "성찰", "고독", "내면의 인도", "지혜", "영적 탐구"
+    ],
+    "meaningReversed": [
+      "고립", "외로움", "거부", "은둔"
+    ],
+    "keywordsUpright": ["성찰", "지혜", "고독", "영적 탐구", "인도"],
+    "keywordsReversed": ["고립", "외로움", "거부", "편견"],
+    "descriptionShort": "내면의 성찰과 영적 탐구를 나타냅니다.",
+    "descriptionLong": "은둔자는 외부 세계로부터 물러나 내면을 탐구하고 영적 깨달음을 얻는 과정을 상징합니다.",
+    "element": "Earth",
+    "symbolism": ["등불", "지팡이", "산", "회색 로브", "육각별"],
+    "questionsToAsk": [
+      "혼자만의 시간이 필요한가요?",
+      "무엇을 성찰해야 하나요?"
+    ],
+    "affirmation": "나는 내면의 빛을 찾습니다.",
+    "fortunetellingKo": ["혼자만의 시간", "성찰", "깨달음"],
+    "relatedHanja": "성찰(省察)",
+    "astrology": "Virgo",
+    "numerology": "9 - 완성과 지혜",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR10",
+    "name": "Wheel of Fortune",
+    "nameKo": "운명의 수레바퀴",
+    "arcana": "Major",
+    "suit": null,
+    "number": 10,
+    "meaningUpright": [
+      "운명", "변화", "순환", "전환점", "행운"
+    ],
+    "meaningReversed": [
+      "불운", "저항", "통제 불가"
+    ],
+    "keywordsUpright": ["운명", "변화", "순환", "기회", "전환"],
+    "keywordsReversed": ["불운", "지연", "저항", "불안정"],
+    "descriptionShort": "운명의 변화와 순환을 상징합니다.",
+    "descriptionLong": "운명의 수레바퀴는 인생의 순환과 예측 불가능한 변화, 운명의 전환점을 나타냅니다.",
+    "element": "Fire",
+    "symbolism": ["수레바퀴", "네 생물", "뱀", "아누비스", "스핑크스"],
+    "questionsToAsk": [
+      "어떤 변화가 다가오고 있나요?",
+      "새로운 기회를 받아들일 준비가 되었나요?"
+    ],
+    "affirmation": "나는 변화의 흐름을 받아들입니다.",
+    "fortunetellingKo": ["행운", "전환기", "기회"],
+    "relatedHanja": "운명(運命)",
+    "astrology": "Jupiter",
+    "numerology": "10 - 완성과 새 시작",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR11",
+    "name": "Justice",
+    "nameKo": "정의",
+    "arcana": "Major",
+    "suit": null,
+    "number": 11,
+    "meaningUpright": [
+      "정의", "공정함", "진실", "법", "인과응보"
+    ],
+    "meaningReversed": [
+      "불공정", "불균형", "책임 회피"
+    ],
+    "keywordsUpright": ["정의", "균형", "진실", "법", "공정"],
+    "keywordsReversed": ["불공정", "불균형", "회피", "부정"],
+    "descriptionShort": "공정한 판단과 균형을 나타냅니다.",
+    "descriptionLong": "정의 카드는 공정한 판단, 진실, 그리고 행동의 결과에 대한 책임을 상징합니다.",
+    "element": "Air",
+    "symbolism": ["저울", "검", "왕좌", "기둥", "붉은 망토"],
+    "questionsToAsk": [
+      "공정한 결정을 내리고 있나요?",
+      "책임을 다하고 있나요?"
+    ],
+    "affirmation": "나는 진실과 공정함을 추구합니다.",
+    "fortunetellingKo": ["법적 문제", "공정한 결과", "진실"],
+    "relatedHanja": "정의(正義)",
+    "astrology": "Libra",
+    "numerology": "11 - 정신적 깨달음",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR12",
+    "name": "The Hanged Man",
+    "nameKo": "매달린 사람",
+    "arcana": "Major",
+    "suit": null,
+    "number": 12,
+    "meaningUpright": [
+      "희생", "새로운 관점", "정지", "surrender", "깨달음"
+    ],
+    "meaningReversed": [
+      "지연", "저항", "헛된 희생"
+    ],
+    "keywordsUpright": ["희생", "관점 전환", "정지", "surrender", "깨달음"],
+    "keywordsReversed": ["지연", "저항", "집착", "헛됨"],
+    "descriptionShort": "새로운 관점과 자발적 희생을 상징합니다.",
+    "descriptionLong": "매달린 사람은 역설적으로 정지를 통한 전진, 내려놓음을 통한 얻음을 나타냅니다.",
+    "element": "Water",
+    "symbolism": ["거꾸로 매달린 사람", "후광", "T자 나무", "평온한 표정"],
+    "questionsToAsk": [
+      "어떤 것을 내려놓아야 하나요?",
+      "관점을 바꿔 볼 필요가 있나요?"
+    ],
+    "affirmation": "나는 흐름에 surrender합니다.",
+    "fortunetellingKo": ["정지", "희생", "깨달음"],
+    "relatedHanja": "희생(犧牲)",
+    "astrology": "Neptune",
+    "numerology": "12 - 영적 성장",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR13",
+    "name": "Death",
+    "nameKo": "죽음",
+    "arcana": "Major",
+    "suit": null,
+    "number": 13,
+    "meaningUpright": [
+      "변화", "끝과 시작", "변환", "정화", "재생"
+    ],
+    "meaningReversed": [
+      "저항", "변화 거부", "정체"
+    ],
+    "keywordsUpright": ["변화", "끝", "변환", "재생", "정화"],
+    "keywordsReversed": ["저항", "정체", "두려움", "거부"],
+    "descriptionShort": "끝과 새로운 시작, 변환을 상징합니다.",
+    "descriptionLong": "죽음 카드는 물리적 죽음이 아닌 삶의 단계적 변화와 재탄생을 의미합니다.",
+    "element": "Water",
+    "symbolism": ["죽음의 기사", "백마", "지는 해", "장미", "깃발"],
+    "questionsToAsk": [
+      "무엇을 끝내야 하나요?",
+      "어떤 변화를 받아들여야 하나요?"
+    ],
+    "affirmation": "나는 변화를 통해 재탄생합니다.",
+    "fortunetellingKo": ["큰 변화", "끝과 시작", "전환"],
+    "relatedHanja": "변화(變化)",
+    "astrology": "Scorpio",
+    "numerology": "13 - 변환",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR14",
+    "name": "Temperance",
+    "nameKo": "절제",
+    "arcana": "Major",
+    "suit": null,
+    "number": 14,
+    "meaningUpright": [
+      "균형", "절제", "인내", "조화", "치유"
+    ],
+    "meaningReversed": [
+      "불균형", "과잉", "조급함"
+    ],
+    "keywordsUpright": ["균형", "절제", "조화", "인내", "치유"],
+    "keywordsReversed": ["불균형", "과잉", "조급", "불화"],
+    "descriptionShort": "균형과 절제, 조화를 나타냅니다.",
+    "descriptionLong": "절제 카드는 극단을 피하고 중용을 지키며 조화로운 균형을 이루는 지혜를 상징합니다.",
+    "element": "Fire",
+    "symbolism": ["천사", "두 컵", "물", "아이리스", "산", "왕관"],
+    "questionsToAsk": [
+      "어디서 균형이 필요한가요?",
+      "인내심을 가져야 할 부분은?"
+    ],
+    "affirmation": "나는 모든 것에서 균형을 찾습니다.",
+    "fortunetellingKo": ["균형", "치유", "인내"],
+    "relatedHanja": "절제(節制)",
+    "astrology": "Sagittarius",
+    "numerology": "14 - 균형과 조화",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR15",
+    "name": "The Devil",
+    "nameKo": "악마",
+    "arcana": "Major",
+    "suit": null,
+    "number": 15,
+    "meaningUpright": [
+      "속박", "중독", "물질주의", "욕망", "그림자"
+    ],
+    "meaningReversed": [
+      "해방", "자유", "깨달음", "벗어남"
+    ],
+    "keywordsUpright": ["속박", "중독", "욕망", "물질주의", "그림자"],
+    "keywordsReversed": ["해방", "자유", "깨달음", "극복"],
+    "descriptionShort": "속박과 욕망, 그림자를 상징합니다.",
+    "descriptionLong": "악마 카드는 우리를 묶는 중독, 욕망, 그리고 스스로 만든 속박을 나타냅니다.",
+    "element": "Earth",
+    "symbolism": ["박쥐 날개", "역오각형", "사슬", "횃불", "두 인간"],
+    "questionsToAsk": [
+      "어떤 것에 중독되어 있나요?",
+      "무엇이 당신을 속박하고 있나요?"
+    ],
+    "affirmation": "나는 스스로를 해방시킵니다.",
+    "fortunetellingKo": ["유혹", "중독", "속박"],
+    "relatedHanja": "욕망(慾望)",
+    "astrology": "Capricorn",
+    "numerology": "15 - 시험과 유혹",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR16",
+    "name": "The Tower",
+    "nameKo": "탑",
+    "arcana": "Major",
+    "suit": null,
+    "number": 16,
+    "meaningUpright": [
+      "갑작스런 변화", "붕괴", "계시", "해방", "충격"
+    ],
+    "meaningReversed": [
+      "위기 회피", "변화 지연", "내적 변화"
+    ],
+    "keywordsUpright": ["붕괴", "충격", "계시", "해방", "변화"],
+    "keywordsReversed": ["회피", "지연", "내적 변화", "저항"],
+    "descriptionShort": "갑작스런 변화와 붕괴를 나타냅니다.",
+    "descriptionLong": "탑 카드는 잘못된 기반의 붕괴와 갑작스런 깨달음, 그리고 새로운 시작을 위한 파괴를 상징합니다.",
+    "element": "Fire",
+    "symbolism": ["번개", "왕관", "떨어지는 사람들", "불", "산"],
+    "questionsToAsk": [
+      "어떤 허상이 무너져야 하나요?",
+      "갑작스런 변화에 어떻게 대처하나요?"
+    ],
+    "affirmation": "나는 변화 속에서 진실을 발견합니다.",
+    "fortunetellingKo": ["급변", "붕괴", "계시"],
+    "relatedHanja": "파괴(破壞)",
+    "astrology": "Mars",
+    "numerology": "16 - 붕괴와 재건",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR17",
+    "name": "The Star",
+    "nameKo": "별",
+    "arcana": "Major",
+    "suit": null,
+    "number": 17,
+    "meaningUpright": [
+      "희망", "영감", "평온", "치유", "갱신"
+    ],
+    "meaningReversed": [
+      "절망", "신념 상실", "환멸"
+    ],
+    "keywordsUpright": ["희망", "영감", "치유", "평온", "믿음"],
+    "keywordsReversed": ["절망", "상실", "환멸", "불신"],
+    "descriptionShort": "희망과 치유, 영감을 상징합니다.",
+    "descriptionLong": "별 카드는 어둠 속의 희망, 치유의 에너지, 그리고 영적 갱신을 나타냅니다.",
+    "element": "Air",
+    "symbolism": ["큰 별", "일곱 개의 작은 별", "물", "새", "나무"],
+    "questionsToAsk": [
+      "당신의 희망은 무엇인가요?",
+      "어떻게 치유되고 있나요?"
+    ],
+    "affirmation": "나는 희망의 빛을 따릅니다.",
+    "fortunetellingKo": ["희망", "치유", "영감"],
+    "relatedHanja": "희망(希望)",
+    "astrology": "Aquarius",
+    "numerology": "17 - 희망과 영감",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR18",
+    "name": "The Moon",
+    "nameKo": "달",
+    "arcana": "Major",
+    "suit": null,
+    "number": 18,
+    "meaningUpright": [
+      "환상", "두려움", "불안", "잠재의식", "직관"
+    ],
+    "meaningReversed": [
+      "두려움 극복", "명료함", "진실 발견"
+    ],
+    "keywordsUpright": ["환상", "두려움", "직관", "잠재의식", "신비"],
+    "keywordsReversed": ["명료", "진실", "극복", "깨달음"],
+    "descriptionShort": "환상과 두려움, 무의식을 나타냅니다.",
+    "descriptionLong": "달 카드는 불확실성, 환상, 그리고 무의식의 깊은 두려움을 상징합니다.",
+    "element": "Water",
+    "symbolism": ["달", "개와 늑대", "게", "탑", "길"],
+    "questionsToAsk": [
+      "어떤 두려움이 당신을 가로막고 있나요?",
+      "환상과 진실을 구분하고 있나요?"
+    ],
+    "affirmation": "나는 두려움을 넘어 진실을 봅니다.",
+    "fortunetellingKo": ["불안", "환상", "직관"],
+    "relatedHanja": "환상(幻想)",
+    "astrology": "Pisces",
+    "numerology": "18 - 환상과 두려움",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR19",
+    "name": "The Sun",
+    "nameKo": "태양",
+    "arcana": "Major",
+    "suit": null,
+    "number": 19,
+    "meaningUpright": [
+      "성공", "기쁨", "활력", "낙관", "명료함"
+    ],
+    "meaningReversed": [
+      "우울", "낙담", "지연된 성공"
+    ],
+    "keywordsUpright": ["성공", "기쁨", "활력", "명료", "낙관"],
+    "keywordsReversed": ["우울", "낙담", "지연", "실패"],
+    "descriptionShort": "기쁨과 성공, 활력을 상징합니다.",
+    "descriptionLong": "태양 카드는 순수한 기쁨, 성공, 그리고 생명의 활력을 나타냅니다.",
+    "element": "Fire",
+    "symbolism": ["태양", "아이", "백마", "해바라기", "깃발"],
+    "questionsToAsk": [
+      "무엇이 당신에게 기쁨을 주나요?",
+      "성공을 어떻게 축하하나요?"
+    ],
+    "affirmation": "나는 빛과 기쁨으로 가득합니다.",
+    "fortunetellingKo": ["성공", "행복", "기쁨"],
+    "relatedHanja": "광명(光明)",
+    "astrology": "Sun",
+    "numerology": "19 - 성공과 기쁨",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR20",
+    "name": "Judgement",
+    "nameKo": "심판",
+    "arcana": "Major",
+    "suit": null,
+    "number": 20,
+    "meaningUpright": [
+      "부활", "갱신", "내면의 부름", "사면", "깨달음"
+    ],
+    "meaningReversed": [
+      "자기 의심", "내면의 비평", "판단"
+    ],
+    "keywordsUpright": ["부활", "갱신", "깨달음", "사면", "변환"],
+    "keywordsReversed": ["의심", "자책", "판단", "거부"],
+    "descriptionShort": "부활과 갱신, 내면의 부름을 나타냅니다.",
+    "descriptionLong": "심판 카드는 과거를 반성하고 새롭게 태어나는 영적 각성과 갱신을 상징합니다.",
+    "element": "Fire",
+    "symbolism": ["천사", "나팔", "관에서 일어나는 사람들", "산", "십자가"],
+    "questionsToAsk": [
+      "당신을 부르는 내면의 목소리는 무엇인가요?",
+      "어떻게 갱신되고 있나요?"
+    ],
+    "affirmation": "나는 새롭게 태어납니다.",
+    "fortunetellingKo": ["갱신", "깨달음", "부활"],
+    "relatedHanja": "심판(審判)",
+    "astrology": "Pluto",
+    "numerology": "20 - 부활과 갱신",
+    "isActive": true
+  },
+  {
+    "nameShort": "AR21",
+    "name": "The World",
+    "nameKo": "세계",
+    "arcana": "Major",
+    "suit": null,
+    "number": 21,
+    "meaningUpright": [
+      "완성", "성취", "통합", "여행", "완결"
+    ],
+    "meaningReversed": [
+      "미완성", "지연", "부족함"
+    ],
+    "keywordsUpright": ["완성", "성취", "통합", "조화", "완결"],
+    "keywordsReversed": ["미완성", "지연", "부족", "정체"],
+    "descriptionShort": "완성과 성취, 통합을 상징합니다.",
+    "descriptionLong": "세계 카드는 타로의 여정이 완성되는 마지막 카드로, 완전한 성취와 통합을 나타냅니다.",
+    "element": "Earth",
+    "symbolism": ["춤추는 여인", "월계수 화환", "네 생물", "무한대 리본"],
+    "questionsToAsk": [
+      "무엇을 완성했나요?",
+      "다음 여정을 시작할 준비가 되었나요?"
+    ],
+    "affirmation": "나는 완전함 속에서 조화를 이룹니다.",
+    "fortunetellingKo": ["완성", "성공", "여행"],
+    "relatedHanja": "완성(完成)",
+    "astrology": "Saturn",
+    "numerology": "21 - 완성과 조화",
+    "isActive": true
+  }
+]

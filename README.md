@@ -83,6 +83,22 @@ RATE_LIMIT_MAX_REQUESTS=100
 mongod
 ```
 
+6. Seed the database with initial data:
+```bash
+# Seed with initial cards, spreads, and test users
+npm run seed
+
+# Or clear existing data and seed fresh
+npm run seed:clear
+```
+
+This will create:
+- 22 Major Arcana tarot cards
+- 5 tarot spreads (Single Card, Three Card, Love Triangle, Career Path, Celtic Cross)
+- 2 test user accounts:
+  - User: `test@unwoldam.com` / `password123`
+  - Admin: `admin@unwoldam.com` / `admin123`
+
 ## Running the Application
 
 ### Development Mode
@@ -160,23 +176,93 @@ npm run lint:fix
 
 ## Development Phases
 
-### Phase 1: Project Foundation (Current)
+### Phase 1: Project Foundation (Completed)
 - Project structure setup
 - Database models
 - Authentication system
 - Basic CRUD operations
 - Middleware and utilities
 
-### Phase 2: AI Integration (Next)
+### Phase 2: Data Models & Seed Data (Completed)
+- Enhanced data models with detailed fields
+- 22 Major Arcana cards with Korean translations
+- 5 tarot spread patterns
+- Database seeding scripts
+- Test user accounts
+
+### Phase 3: AI Integration (Next)
 - Anthropic Claude API integration
 - Advanced tarot interpretation
 - Context-aware readings
 
-### Phase 3: Advanced Features (Future)
+### Phase 4: Advanced Features (Future)
 - Image upload for cards
 - Public reading sharing
 - User analytics
 - Email notifications
+
+## MongoDB Atlas Setup (Cloud Database)
+
+If you don't have MongoDB installed locally, you can use MongoDB Atlas (free tier):
+
+1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+2. Create a new cluster (choose the free tier M0)
+
+3. Create a database user:
+   - Go to "Database Access"
+   - Add a new database user with username and password
+   - Remember these credentials!
+
+4. Whitelist your IP address:
+   - Go to "Network Access"
+   - Click "Add IP Address"
+   - Choose "Allow Access from Anywhere" for development (0.0.0.0/0)
+
+5. Get your connection string:
+   - Go to "Clusters" and click "Connect"
+   - Choose "Connect your application"
+   - Copy the connection string
+   - Replace `<password>` with your database user password
+   - Replace `myFirstDatabase` with `unwoldam`
+
+6. Update your `.env` file:
+```env
+MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/unwoldam?retryWrites=true&w=majority
+```
+
+7. Run the seed command:
+```bash
+npm run seed
+```
+
+## Data Models
+
+### Card Model
+- 22 Major Arcana cards with detailed meanings
+- Upright and reversed interpretations
+- Korean translations
+- Keywords, symbolism, and affirmations
+- Astrological and numerological associations
+
+### Spread Model
+- Multiple spread patterns (1-10 cards)
+- Position-specific interpretations
+- Difficulty levels (beginner, intermediate, advanced)
+- Categories (love, career, spiritual, general, health)
+
+### Reading Model
+- User questions and card draws
+- AI-generated interpretations
+- User feedback and ratings
+- Voice reading support
+- Public/private sharing options
+
+### User Model
+- Authentication and profiles
+- Subscription tiers (free, basic, premium)
+- Reading history and statistics
+- Preferences and expertise levels
 
 ## Security Features
 

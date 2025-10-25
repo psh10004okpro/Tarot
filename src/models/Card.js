@@ -5,61 +5,114 @@ const mongoose = require('mongoose');
  * Represents individual tarot cards with their meanings and symbolism
  */
 const cardSchema = new mongoose.Schema({
+  nameShort: {
+    type: String,
+    required: [true, 'Card short name is required'],
+    unique: true,
+    trim: true,
+    uppercase: true,
+    // Examples: "AR00", "CU01", "WA14"
+  },
   name: {
     type: String,
     required: [true, 'Card name is required'],
-    unique: true,
     trim: true,
+    // Examples: "The Fool", "Ace of Cups"
   },
   nameKo: {
     type: String,
     required: [true, 'Korean card name is required'],
     trim: true,
+    // Examples: "광대", "컵 에이스"
+  },
+  arcana: {
+    type: String,
+    enum: ['Major', 'Minor'],
+    required: true,
+  },
+  suit: {
+    type: String,
+    enum: ['Wands', 'Cups', 'Swords', 'Pentacles', null],
+    default: null,
   },
   number: {
     type: Number,
     required: [true, 'Card number is required'],
     min: 0,
-    max: 77,
+    max: 78,
   },
-  suit: {
-    type: String,
-    enum: ['major', 'wands', 'cups', 'swords', 'pentacles'],
-    required: true,
-  },
-  arcana: {
-    type: String,
-    enum: ['major', 'minor'],
-    required: true,
-  },
-  uprightMeaning: {
-    type: String,
-    required: [true, 'Upright meaning is required'],
-  },
-  reversedMeaning: {
-    type: String,
-    required: [true, 'Reversed meaning is required'],
-  },
-  keywords: [{
+
+  // Meanings and Keywords
+  meaningUpright: [{
     type: String,
     trim: true,
   }],
-  symbolism: {
+  meaningReversed: [{
+    type: String,
+    trim: true,
+  }],
+  keywordsUpright: [{
+    type: String,
+    trim: true,
+  }],
+  keywordsReversed: [{
+    type: String,
+    trim: true,
+  }],
+
+  // Descriptions
+  descriptionShort: {
+    type: String,
+    maxlength: 200,
+  },
+  descriptionLong: {
     type: String,
   },
-  description: {
-    type: String,
-  },
-  imageUrl: {
-    type: String,
-  },
+
+  // Symbolism and Elements
   element: {
     type: String,
-    enum: ['fire', 'water', 'air', 'earth', 'spirit', null],
+    enum: ['Fire', 'Water', 'Air', 'Earth', null],
+    default: null,
   },
+  symbolism: [{
+    type: String,
+    trim: true,
+  }],
+
+  // Guidance and Questions
+  questionsToAsk: [{
+    type: String,
+    trim: true,
+  }],
+  affirmation: {
+    type: String,
+  },
+
+  // Korean Market Specific
+  fortunetellingKo: [{
+    type: String,
+    trim: true,
+  }],
+  relatedHanja: {
+    type: String,
+    trim: true,
+  },
+
+  // Astrological and Mystical
   astrology: {
     type: String,
   },
+  numerology: {
+    type: String,
+  },
+
+  // Media
+  imageUrl: {
+    type: String,
+  },
+
+  // Status
   isActive: {
     type: Boolean,
     default: true,
@@ -68,8 +121,16 @@ const cardSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Index for efficient queries
-cardSchema.index({ suit: 1, number: 1 });
+// Indexes for efficient queries
+cardSchema.index({ nameShort: 1 }, { unique: true });
 cardSchema.index({ arcana: 1 });
+cardSchema.index({ suit: 1, number: 1 });
+cardSchema.index({ keywordsUpright: 'text', keywordsReversed: 'text' });
+
+// Pre-save hook to update timestamps
+cardSchema.pre('save', function (next) {
+  this.updatedAt = new Date();
+  next();
+});
 
 module.exports = mongoose.model('Card', cardSchema);

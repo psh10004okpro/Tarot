@@ -41,9 +41,12 @@ const spreadSchema = new mongoose.Schema({
       required: true,
       trim: true,
     },
-    meaning: {
+    description: {
       type: String,
       required: true,
+    },
+    interpretationGuide: {
+      type: String,
     },
   }],
   difficulty: {
@@ -53,14 +56,25 @@ const spreadSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['general', 'love', 'career', 'spiritual', 'decision'],
+    enum: ['love', 'career', 'spiritual', 'general', 'health'],
     default: 'general',
+  },
+  imageLayout: {
+    type: String,
+  },
+  isPremium: {
+    type: Boolean,
+    default: false,
   },
   isActive: {
     type: Boolean,
     default: true,
   },
   popularity: {
+    type: Number,
+    default: 0,
+  },
+  usageCount: {
     type: Number,
     default: 0,
   },
@@ -73,11 +87,13 @@ spreadSchema.pre('save', function (next) {
   if (this.positions.length !== this.cardCount) {
     next(new Error('Number of positions must match cardCount'));
   } else {
+    this.updatedAt = new Date();
     next();
   }
 });
 
 // Index for efficient queries
 spreadSchema.index({ category: 1, difficulty: 1 });
+spreadSchema.index({ popularity: -1 });
 
 module.exports = mongoose.model('Spread', spreadSchema);

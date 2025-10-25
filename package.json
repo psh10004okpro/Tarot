@@ -9,7 +9,9 @@
     "test": "jest --watchAll --verbose",
     "test:ci": "jest --ci",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "seed": "node scripts/seedDatabase.js",
+    "seed:clear": "node scripts/seedDatabase.js --clear"
   },
   "keywords": [
     "tarot",
