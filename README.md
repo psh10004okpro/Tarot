@@ -122,39 +122,57 @@ npm run lint
 npm run lint:fix
 ```
 
-## API Endpoints
+## API Documentation
+
+**Interactive API Documentation**: Available at `/api-docs` when server is running
+
+**Postman Collection**: Import `postman_collection.json` for testing
+
+### Base URL
+- Development: `http://localhost:3000`
+- API Version: `/api/v1`
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user (protected)
-- `PUT /api/auth/profile` - Update profile (protected)
+- `POST /api/v1/auth/register` - Register new user
+- `POST /api/v1/auth/login` - Login user
+- `POST /api/v1/auth/logout` - Logout user (protected)
+- `GET /api/v1/auth/me` - Get current user (protected)
+- `PUT /api/v1/auth/profile` - Update profile (protected)
 
 ### Cards
-- `GET /api/cards` - Get all cards
-- `GET /api/cards/:id` - Get single card
-- `GET /api/cards/random/:count` - Get random cards
-- `POST /api/cards` - Create card (admin only)
-- `PUT /api/cards/:id` - Update card (admin only)
-- `DELETE /api/cards/:id` - Delete card (admin only)
+- `GET /api/v1/cards` - Get all cards (supports pagination, filtering)
+- `GET /api/v1/cards/search?q=term` - Search cards by name/keywords
+- `GET /api/v1/cards/random/:count` - Get random cards (1-10)
+- `GET /api/v1/cards/:id` - Get single card
+- `POST /api/v1/cards` - Create card (admin only)
+- `PUT /api/v1/cards/:id` - Update card (admin only)
+- `DELETE /api/v1/cards/:id` - Delete card (admin only)
 
 ### Spreads
-- `GET /api/spreads` - Get all spreads
-- `GET /api/spreads/:id` - Get single spread
-- `POST /api/spreads` - Create spread (admin only)
-- `PUT /api/spreads/:id` - Update spread (admin only)
-- `DELETE /api/spreads/:id` - Delete spread (admin only)
+- `GET /api/v1/spreads` - Get all spreads
+- `GET /api/v1/spreads/:id` - Get single spread
+- `POST /api/v1/spreads` - Create spread (admin only)
+- `PUT /api/v1/spreads/:id` - Update spread (admin only)
+- `DELETE /api/v1/spreads/:id` - Delete spread (admin only)
 
 ### Readings
-- `GET /api/readings` - Get user's readings (protected)
-- `GET /api/readings/:id` - Get single reading (protected)
-- `POST /api/readings` - Create new reading (protected)
-- `PUT /api/readings/:id` - Update reading (protected)
-- `DELETE /api/readings/:id` - Delete reading (protected)
+- `GET /api/v1/readings` - Get user's readings (protected, paginated)
+- `GET /api/v1/readings/:id` - Get single reading (protected)
+- `POST /api/v1/readings` - Create new reading (protected, rate-limited)
+- `PUT /api/v1/readings/:id` - Update reading (protected)
+- `DELETE /api/v1/readings/:id` - Delete reading (protected)
+- `POST /api/v1/readings/:id/feedback` - Submit reading feedback (protected)
+
+### Users
+- `GET /api/v1/users/profile` - Get user profile (protected)
+- `PUT /api/v1/users/profile` - Update user profile (protected)
+- `PUT /api/v1/users/password` - Update password (protected)
+- `GET /api/v1/users/stats` - Get user statistics (protected)
 
 ### System
 - `GET /health` - Health check
 - `GET /` - API information
+- `GET /api-docs` - Swagger API documentation
 
 ## API Response Format
 
@@ -170,32 +188,52 @@ npm run lint:fix
 ```json
 {
   "success": false,
-  "error": "Error message"
+  "error": {
+    "message": "Error message",
+    "code": "ERROR_CODE"
+  }
 }
 ```
 
+### Rate Limiting
+- **Global**: 100 requests per 15 minutes
+- **Login**: 5 attempts per 15 minutes
+- **Register**: 3 attempts per hour
+- **Create Reading**: 10 per hour (free users), unlimited (premium)
+
 ## Development Phases
 
-### Phase 1: Project Foundation (Completed)
+### Phase 1: Project Foundation ✅ Completed
 - Project structure setup
 - Database models
 - Authentication system
 - Basic CRUD operations
 - Middleware and utilities
 
-### Phase 2: Data Models & Seed Data (Completed)
+### Phase 2: Data Models & Seed Data ✅ Completed
 - Enhanced data models with detailed fields
 - 22 Major Arcana cards with Korean translations
 - 5 tarot spread patterns
 - Database seeding scripts
 - Test user accounts
 
-### Phase 3: AI Integration (Next)
+### Phase 3: Complete REST API ✅ Completed
+- Enhanced authentication with subscription management
+- Comprehensive API endpoints (/api/v1)
+- Search and pagination for cards
+- Reading feedback system
+- User profile and statistics
+- Rate limiting per endpoint
+- Swagger/OpenAPI documentation
+- Integration tests (Jest + Supertest)
+- Postman collection
+
+### Phase 4: AI Integration (Next)
 - Anthropic Claude API integration
 - Advanced tarot interpretation
 - Context-aware readings
 
-### Phase 4: Advanced Features (Future)
+### Phase 5: Advanced Features (Future)
 - Image upload for cards
 - Public reading sharing
 - User analytics
