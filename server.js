@@ -4,6 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./src/config/swagger');
 const connectDB = require('./src/config/database');
 const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 const logger = require('./src/utils/logger');
@@ -13,6 +15,7 @@ const authRoutes = require('./src/routes/auth');
 const cardRoutes = require('./src/routes/cards');
 const spreadRoutes = require('./src/routes/spreads');
 const readingRoutes = require('./src/routes/readings');
+const userRoutes = require('./src/routes/users');
 
 /**
  * Unwoldam Studio - Tarot Card AI API
@@ -35,15 +38,44 @@ app.use(cors({
 }));
 
 // Rate Limiting
-const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requests per window
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-app.use('/api/', limiter);
+const authLoginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 login attempts per window
+  message: 'Too many login attempts, please try again after 15 minutes.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  skipSuccessfulRequests: true,
+});
+
+const authRegisterLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 3, // 3 registration attempts per hour
+  message: 'Too many registration attempts, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const readingCreationLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // 10 readings per hour for free users
+  message: 'Reading creation limit reached. Upgrade to premium for unlimited readings.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting for premium users
+    return req.user && req.user.subscription && req.user.subscription.type === 'premium';
+  },
+});
+
+app.use('/api/', globalLimiter);
 
 // Body Parser Middleware
 app.use(express.json({ limit: '10mb' }));
@@ -69,11 +101,28 @@ app.get('/health', (req, res) => {
   });
 });
 
+// API Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Unwoldam API Docs',
+}));
+
 // API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/cards', cardRoutes);
-app.use('/api/spreads', spreadRoutes);
-app.use('/api/readings', readingRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/cards', cardRoutes);
+app.use('/api/v1/spreads', spreadRoutes);
+app.use('/api/v1/readings', readingRoutes);
+app.use('/api/v1/users', userRoutes);
+
+// Apply specific rate limiters
+const authRouter = express.Router();
+authRouter.post('/login', authLoginLimiter);
+authRouter.post('/register', authRegisterLimiter);
+app.use('/api/v1/auth', authRouter);
+
+const readingRouter = express.Router();
+readingRouter.post('/', readingCreationLimiter);
+app.use('/api/v1/readings', readingRouter);
 
 // Welcome Route
 app.get('/', (req, res) => {
@@ -81,12 +130,14 @@ app.get('/', (req, res) => {
     success: true,
     message: 'Welcome to Unwoldam Studio Tarot API',
     version: '1.0.0',
+    documentation: '/api-docs',
     endpoints: {
       health: '/health',
-      auth: '/api/auth',
-      cards: '/api/cards',
-      spreads: '/api/spreads',
-      readings: '/api/readings',
+      auth: '/api/v1/auth',
+      cards: '/api/v1/cards',
+      spreads: '/api/v1/spreads',
+      readings: '/api/v1/readings',
+      users: '/api/v1/users',
     },
   });
 });

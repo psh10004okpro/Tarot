@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   getAllCards,
+  searchCards,
   getCard,
   createCard,
   updateCard,
@@ -19,6 +20,7 @@ router.route('/')
   .get(getAllCards)
   .post(protect, authorize('admin'), createCard);
 
+router.get('/search', searchCards);
 router.get('/random/:count', getRandomCards);
 
 router.route('/:id')

@@ -117,10 +117,41 @@ const createSpreadSchema = Joi.object({
     .optional(),
 });
 
+// Update Password
+const updatePasswordSchema = Joi.object({
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().min(6).required(),
+});
+
+// Update Profile
+const updateProfileSchema = Joi.object({
+  displayName: Joi.string().max(50).optional(),
+  birthDate: Joi.date().optional(),
+  birthTime: Joi.string().optional(),
+  zodiacSign: Joi.string().valid(
+    'Aries', 'Taurus', 'Gemini', 'Cancer',
+    'Leo', 'Virgo', 'Libra', 'Scorpio',
+    'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'
+  ).optional(),
+});
+
+// Reading Feedback
+const readingFeedbackSchema = Joi.object({
+  rating: Joi.number().min(1).max(5).optional(),
+  accuracyRating: Joi.number().min(1).max(5).optional(),
+  clarityRating: Joi.number().min(1).max(5).optional(),
+  usefulnessRating: Joi.number().min(1).max(5).optional(),
+  comment: Joi.string().max(1000).optional(),
+  resonated: Joi.boolean().optional(),
+});
+
 module.exports = {
   validate,
   registerSchema,
   loginSchema,
   createReadingSchema,
   createSpreadSchema,
+  updatePasswordSchema,
+  updateProfileSchema,
+  readingFeedbackSchema,
 };

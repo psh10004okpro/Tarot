@@ -101,8 +101,56 @@ const optionalAuth = async (req, res, next) => {
   }
 };
 
+/**
+ * Check subscription level
+ */
+const requireSubscription = (...subscriptionTypes) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: 'Authentication required',
+      });
+    }
+
+    if (!subscriptionTypes.includes(req.user.subscription.type)) {
+      return res.status(403).json({
+        success: false,
+        error: `This feature requires ${subscriptionTypes.join(' or ')} subscription`,
+        code: 'SUBSCRIPTION_REQUIRED',
+      });
+    }
+
+    next();
+  };
+};
+
+/**
+ * Check if user has credits
+ */
+const checkCredits = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: 'Authentication required',
+    });
+  }
+
+  if (req.user.subscription.credits <= 0) {
+    return res.status(403).json({
+      success: false,
+      error: 'Insufficient credits. Please upgrade your subscription.',
+      code: 'INSUFFICIENT_CREDITS',
+    });
+  }
+
+  next();
+};
+
 module.exports = {
   protect,
   authorize,
   optionalAuth,
+  requireSubscription,
+  checkCredits,
 };

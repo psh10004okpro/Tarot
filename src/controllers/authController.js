@@ -153,9 +153,30 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Logout user
+ * @route   POST /api/v1/auth/logout
+ * @access  Private
+ */
+const logout = async (req, res, next) => {
+  try {
+    // In a stateless JWT setup, logout is handled client-side by removing the token
+    // This endpoint confirms the logout action
+    // For enhanced security, implement token blacklisting with Redis in production
+
+    res.status(200).json({
+      success: true,
+      message: 'Logged out successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
+  logout,
   getMe,
   updateProfile,
 };

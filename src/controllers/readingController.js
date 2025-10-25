@@ -240,10 +240,72 @@ const deleteReading = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Submit feedback for reading
+ * @route   POST /api/v1/readings/:id/feedback
+ * @access  Private
+ */
+const submitFeedback = async (req, res, next) => {
+  try {
+    const reading = await Reading.findById(req.params.id);
+
+    if (!reading) {
+      return res.status(404).json({
+        success: false,
+        error: 'Reading not found',
+      });
+    }
+
+    // Check ownership
+    if (reading.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to provide feedback for this reading',
+      });
+    }
+
+    const {
+      rating,
+      accuracyRating,
+      clarityRating,
+      usefulnessRating,
+      comment,
+      resonated,
+    } = req.body;
+
+    // Update feedback fields
+    const feedbackUpdate = {};
+    if (rating !== undefined) feedbackUpdate['userFeedback.rating'] = rating;
+    if (accuracyRating !== undefined) feedbackUpdate['userFeedback.accuracyRating'] = accuracyRating;
+    if (clarityRating !== undefined) feedbackUpdate['userFeedback.clarityRating'] = clarityRating;
+    if (usefulnessRating !== undefined) feedbackUpdate['userFeedback.usefulnessRating'] = usefulnessRating;
+    if (comment !== undefined) feedbackUpdate['userFeedback.comment'] = comment;
+    if (resonated !== undefined) feedbackUpdate['userFeedback.resonated'] = resonated;
+    feedbackUpdate['userFeedback.feedbackDate'] = new Date();
+
+    const updatedReading = await Reading.findByIdAndUpdate(
+      req.params.id,
+      feedbackUpdate,
+      { new: true, runValidators: true }
+    )
+      .populate('spread')
+      .populate('cards.card');
+
+    res.status(200).json({
+      success: true,
+      message: 'Feedback submitted successfully',
+      data: updatedReading,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createReading,
   getMyReadings,
   getReading,
   updateReading,
   deleteReading,
+  submitFeedback,
 };
