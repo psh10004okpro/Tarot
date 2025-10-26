@@ -159,7 +159,7 @@ const readingSchema = new mongoose.Schema({
 
 // Indexes for efficient queries
 readingSchema.index({ user: 1, createdAt: -1 });
-readingSchema.index({ spread: 1 });
+// Note: spread index is already created by 'index: true' option
 readingSchema.index({ questionCategory: 1 });
 readingSchema.index({ isFavorite: 1 });
 readingSchema.index({ isPublic: 1 });

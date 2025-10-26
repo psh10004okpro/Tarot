@@ -122,7 +122,7 @@ const cardSchema = new mongoose.Schema({
 });
 
 // Indexes for efficient queries
-cardSchema.index({ nameShort: 1 }, { unique: true });
+// Note: nameShort index is already created by 'unique: true' option
 cardSchema.index({ arcana: 1 });
 cardSchema.index({ suit: 1, number: 1 });
 cardSchema.index({ keywordsUpright: 'text', keywordsReversed: 'text' });

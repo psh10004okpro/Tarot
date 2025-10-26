@@ -182,8 +182,7 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
-// Indexes
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
+// Note: email and username indexes are already created by 'unique: true' option
+// No additional indexes needed
 
 module.exports = mongoose.model('User', userSchema);
