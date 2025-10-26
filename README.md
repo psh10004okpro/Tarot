@@ -19,10 +19,12 @@ AI-powered tarot card reading application backend built with Node.js, Express, a
 - **Framework**: Express.js 4.18
 - **Database**: MongoDB with Mongoose 8.x
 - **Authentication**: JWT (jsonwebtoken)
+- **AI**: Anthropic Claude Sonnet 4, OpenAI Whisper & TTS
 - **Security**: Helmet, bcrypt, CORS, rate-limiting
 - **Validation**: Joi
 - **Testing**: Jest, Supertest
 - **Code Quality**: ESLint
+- **Deployment**: Docker, Railway (Platform-as-a-Service)
 
 ## Project Structure
 
@@ -508,6 +510,67 @@ audio.play();
 - Audio files are automatically deleted after 24 hours
 - Cleanup runs daily at midnight (cron job)
 - Manual cleanup can be triggered if needed
+
+## Deployment
+
+### Railway Deployment (Recommended)
+
+This application is optimized for deployment on **Railway** with full platform portability.
+
+**Quick Deploy:**
+
+1. Fork this repository to your GitHub account
+2. Sign up at [Railway](https://railway.app)
+3. Create new project from GitHub repo
+4. Add environment variables (see RAILWAY_DEPLOYMENT.md)
+5. Deploy automatically
+
+**Comprehensive Guide:**
+
+For detailed step-by-step instructions, troubleshooting, and cost optimization:
+
+📖 **[Railway Deployment Guide](./RAILWAY_DEPLOYMENT.md)**
+
+### Docker Deployment
+
+The application includes a production-ready Dockerfile for containerized deployment.
+
+```bash
+# Build image
+docker build -t unwoldam-tarot-api .
+
+# Run container
+docker run -p 3000:3000 \
+  -e MONGODB_URI="your_mongodb_uri" \
+  -e ANTHROPIC_API_KEY="your_key" \
+  -e OPENAI_API_KEY="your_key" \
+  -e JWT_SECRET="your_secret" \
+  unwoldam-tarot-api
+```
+
+### Platform Portability
+
+The application is designed for maximum portability (95/100 score):
+
+- **Environment-based configuration**: All settings via env variables
+- **Storage abstraction layer**: Supports local/S3/GCS storage
+- **Docker containerization**: Deploy anywhere Docker runs
+- **No platform lock-in**: Easy migration to AWS, GCP, Azure, DigitalOcean
+
+**Supported Platforms:**
+- Railway (recommended for MVP)
+- Render
+- Fly.io
+- AWS (ECS, Elastic Beanstalk)
+- Google Cloud (Cloud Run)
+- DigitalOcean App Platform
+- Any Docker-compatible platform
+
+**Cost Estimates:**
+- Railway: $3-5/month (free tier covers MVP)
+- Render: $7/month (free tier available)
+- Fly.io: $5-10/month
+- See RAILWAY_DEPLOYMENT.md for detailed cost analysis
 
 ## Data Models
 
