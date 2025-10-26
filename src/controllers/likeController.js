@@ -1,5 +1,7 @@
 const Like = require('../models/Like');
 const Reading = require('../models/Reading');
+const User = require('../models/User');
+const emailService = require('../services/emailService');
 
 /**
  * Like Controller
@@ -52,6 +54,24 @@ const likeReading = async (req, res, next) => {
     // Increment like count on reading
     reading.likesCount += 1;
     await reading.save();
+
+    // Send email notification to reading owner (async, don't wait)
+    // Only if liker is not the reading owner
+    if (reading.user.toString() !== req.user.id) {
+      User.findById(reading.user).then((readingOwner) => {
+        if (readingOwner && readingOwner.preferences?.emailNotifications !== false) {
+          emailService.sendLikeNotificationEmail(
+            readingOwner,
+            req.user,
+            reading
+          ).catch((error) => {
+            console.error('Failed to send like notification email:', error);
+          });
+        }
+      }).catch((error) => {
+        console.error('Failed to fetch reading owner:', error);
+      });
+    }
 
     res.status(201).json({
       success: true,

@@ -1,5 +1,7 @@
 const Comment = require('../models/Comment');
 const Reading = require('../models/Reading');
+const User = require('../models/User');
+const emailService = require('../services/emailService');
 
 /**
  * Comment Controller
@@ -53,6 +55,25 @@ const createComment = async (req, res, next) => {
     // Populate user info
     const populatedComment = await Comment.findById(comment._id)
       .populate('user', 'username profile.displayName');
+
+    // Send email notification to reading owner (async, don't wait)
+    // Only if commenter is not the reading owner
+    if (reading.user.toString() !== req.user.id) {
+      User.findById(reading.user).then((readingOwner) => {
+        if (readingOwner && readingOwner.preferences?.emailNotifications !== false) {
+          emailService.sendCommentNotificationEmail(
+            readingOwner,
+            req.user,
+            reading,
+            comment
+          ).catch((error) => {
+            console.error('Failed to send comment notification email:', error);
+          });
+        }
+      }).catch((error) => {
+        console.error('Failed to fetch reading owner:', error);
+      });
+    }
 
     res.status(201).json({
       success: true,

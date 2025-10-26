@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const emailService = require('../services/emailService');
 
 /**
  * Auth Controller
@@ -30,6 +31,12 @@ const register = async (req, res, next) => {
       email,
       password,
       displayName,
+    });
+
+    // Send welcome email (async, don't wait)
+    emailService.sendWelcomeEmail(user).catch((error) => {
+      // Log error but don't fail registration
+      console.error('Failed to send welcome email:', error);
     });
 
     // Generate token
