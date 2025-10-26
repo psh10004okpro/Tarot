@@ -11,9 +11,21 @@ const logger = require('../utils/logger');
 
 class VoiceService {
   constructor() {
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
+    // Check if OpenAI API key is configured
+    this.isConfigured = !!process.env.OPENAI_API_KEY;
+
+    if (this.isConfigured) {
+      this.openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+      logger.info('VoiceService initialized with OpenAI API');
+    } else {
+      this.openai = null;
+      logger.warn(
+        'VoiceService: OPENAI_API_KEY not configured. Voice features (STT/TTS) will be disabled.'
+      );
+    }
+
     this.audioDir = path.join(__dirname, '../../public/audio');
     this.ttsModel = process.env.TTS_MODEL || 'tts-1-hd';
     this.ttsVoice = process.env.TTS_VOICE || 'nova';
@@ -33,6 +45,11 @@ class VoiceService {
    * @returns {Promise<String>} Transcribed text
    */
   async transcribeAudio(audioBuffer, filename) {
+    if (!this.isConfigured) {
+      logger.error('VoiceService: Cannot transcribe audio - OPENAI_API_KEY not configured');
+      throw new Error('음성 인식 기능이 비활성화되어 있습니다. 관리자에게 문의하세요.');
+    }
+
     try {
       // Save temporary file
       const tempFilePath = path.join(this.audioDir, `temp_${uuidv4()}_${filename}`);
@@ -67,6 +84,11 @@ class VoiceService {
    * @returns {Promise<String>} Generated audio file URL
    */
   async synthesizeSpeech(text, voice = null) {
+    if (!this.isConfigured) {
+      logger.error('VoiceService: Cannot synthesize speech - OPENAI_API_KEY not configured');
+      throw new Error('음성 합성 기능이 비활성화되어 있습니다. 관리자에게 문의하세요.');
+    }
+
     try {
       const selectedVoice = voice || this.ttsVoice;
       const filename = `tts_${uuidv4()}.mp3`;
