@@ -6,9 +6,11 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./src/config/swagger');
+const cron = require('node-cron');
 const connectDB = require('./src/config/database');
 const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 const logger = require('./src/utils/logger');
+const voiceService = require('./src/services/voiceService');
 
 // Import routes
 const authRoutes = require('./src/routes/auth');
@@ -16,6 +18,7 @@ const cardRoutes = require('./src/routes/cards');
 const spreadRoutes = require('./src/routes/spreads');
 const readingRoutes = require('./src/routes/readings');
 const userRoutes = require('./src/routes/users');
+const voiceRoutes = require('./src/routes/voice');
 
 /**
  * Unwoldam Studio - Tarot Card AI API
@@ -90,6 +93,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Static Files
 app.use('/images', express.static('public/images'));
+app.use('/audio', express.static('public/audio'));
 
 // Health Check Route
 app.get('/health', (req, res) => {
@@ -113,6 +117,7 @@ app.use('/api/v1/cards', cardRoutes);
 app.use('/api/v1/spreads', spreadRoutes);
 app.use('/api/v1/readings', readingRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/voice', voiceRoutes);
 
 // Apply specific rate limiters
 const authRouter = express.Router();
@@ -138,6 +143,7 @@ app.get('/', (req, res) => {
       spreads: '/api/v1/spreads',
       readings: '/api/v1/readings',
       users: '/api/v1/users',
+      voice: '/api/v1/voice',
     },
   });
 });
@@ -153,6 +159,14 @@ const PORT = process.env.PORT || 3000;
 
 const server = app.listen(PORT, () => {
   logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+
+  // Schedule audio file cleanup (runs daily at midnight)
+  cron.schedule('0 0 * * *', () => {
+    logger.info('Running scheduled audio file cleanup...');
+    voiceService.cleanupOldAudioFiles();
+  });
+
+  logger.info('Audio cleanup cron job scheduled (daily at midnight)');
 });
 
 // Handle unhandled promise rejections

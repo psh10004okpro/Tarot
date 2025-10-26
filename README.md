@@ -183,6 +183,12 @@ npm run lint:fix
 - `PUT /api/v1/users/password` - Update password (protected)
 - `GET /api/v1/users/stats` - Get user statistics (protected)
 
+### Voice (STT/TTS)
+- `POST /api/v1/voice/transcribe` - Convert audio to text (protected, multipart/form-data)
+- `POST /api/v1/voice/synthesize` - Convert text to speech (protected)
+- `POST /api/v1/voice/reading` - Full voice tarot reading (protected, multipart/form-data)
+- `POST /api/v1/voice/reading/:id/regenerate` - Regenerate audio for existing reading (protected)
+
 ### System
 - `GET /health` - Health check
 - `GET /` - API information
@@ -252,11 +258,23 @@ npm run lint:fix
 - Fallback interpretation when API unavailable
 - Token usage tracking and cost monitoring
 
-### Phase 5: Advanced Features (Next)
+### Phase 5: Voice Features ✅ Completed
+- OpenAI Whisper integration for Speech-to-Text (STT)
+- OpenAI TTS for Text-to-Speech synthesis
+- Full voice-based tarot reading flow
+- Korean language support for voice
+- Multiple voice style options (6 voices)
+- Audio file management with automatic cleanup
+- Multipart file upload handling
+- Voice reading regeneration for existing readings
+
+### Phase 6: Advanced Features (Next)
 - Image upload for cards
 - Public reading sharing
-- User analytics
+- User analytics dashboard
 - Email notifications
+- Reading history export
+- Social features (comments, likes)
 
 ## MongoDB Atlas Setup (Cloud Database)
 
@@ -347,6 +365,149 @@ CLAUDE_TEMPERATURE=0.7                 # Creativity (0.0-1.0)
   }
 }
 ```
+
+## Voice Features (STT/TTS)
+
+This API supports full voice-based tarot readings using **OpenAI's Whisper** (Speech-to-Text) and **TTS** (Text-to-Speech) APIs.
+
+### Features
+
+- **Speech-to-Text (STT)**: Convert user's spoken question to text using Whisper
+- **Korean Language Support**: Optimized for Korean speech recognition
+- **Text-to-Speech (TTS)**: Convert AI interpretation to natural-sounding Korean audio
+- **Full Voice Reading Flow**: Ask question → Draw cards → Receive audio interpretation
+- **Multiple Voice Options**: Choose from 6 different voice styles
+- **Audio File Management**: Automatic cleanup of old files (24 hours)
+
+### Voice Configuration
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here  # Required
+TTS_MODEL=tts-1-hd                        # High quality (or tts-1 for faster/cheaper)
+TTS_VOICE=nova                            # Voice style (alloy, echo, fable, onyx, nova, shimmer)
+TTS_SPEED=0.95                            # Speech speed (0.25-4.0, default 0.95)
+```
+
+### Voice Styles
+
+- **alloy**: Neutral and balanced
+- **echo**: Clear and professional
+- **fable**: Warm and expressive
+- **onyx**: Deep and authoritative
+- **nova**: Friendly and energetic (default)
+- **shimmer**: Soft and soothing
+
+### Supported Audio Formats
+
+**Upload (STT):**
+- WAV, MP3, M4A, OGG, WebM, FLAC, AAC
+- Maximum file size: 25MB (Whisper API limit)
+
+**Download (TTS):**
+- MP3 format
+- Public URL accessible for 24 hours
+
+### Usage Example
+
+**1. Full Voice Reading (All-in-one)**
+
+```bash
+# Record audio question (e.g., "나의 커리어 전망은 어떤가요?")
+# Upload via multipart/form-data
+
+POST /api/v1/voice/reading
+Content-Type: multipart/form-data
+
+audio: [audio file]
+category: career (optional)
+spread: [spread_id] (optional, defaults to Three Card Spread)
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "reading": { ... },
+    "transcription": "나의 커리어 전망은 어떤가요?",
+    "audioUrl": "/audio/tts_uuid.mp3"
+  }
+}
+```
+
+**2. Transcribe Only (STT)**
+
+```bash
+POST /api/v1/voice/transcribe
+Content-Type: multipart/form-data
+
+audio: [audio file]
+```
+
+**3. Synthesize Only (TTS)**
+
+```bash
+POST /api/v1/voice/synthesize
+Content-Type: application/json
+
+{
+  "text": "타로 리딩 결과입니다...",
+  "voice": "nova"  // optional
+}
+```
+
+**4. Regenerate Audio**
+
+```bash
+# For existing reading without audio
+POST /api/v1/voice/reading/:readingId/regenerate
+```
+
+### Cost Estimation
+
+**Whisper (STT):**
+- $0.006 per minute of audio
+- Average question: 10-30 seconds = ~$0.001-0.003
+
+**TTS:**
+- $15.00 per 1M characters (tts-1-hd)
+- $7.50 per 1M characters (tts-1)
+- Average reading: 1500-2000 characters = ~$0.02-0.03
+
+**Total per voice reading:** ~$0.02-0.04
+
+### Browser Integration Example
+
+```javascript
+// Record audio in browser
+const mediaRecorder = new MediaRecorder(stream);
+// ... record audio ...
+
+// Upload for voice reading
+const formData = new FormData();
+formData.append('audio', audioBlob, 'question.webm');
+formData.append('category', 'love');
+
+const response = await fetch('/api/v1/voice/reading', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${token}`
+  },
+  body: formData
+});
+
+const { data } = await response.json();
+
+// Play audio response
+const audio = new Audio(data.audioUrl);
+audio.play();
+```
+
+### Audio File Cleanup
+
+- Audio files are automatically deleted after 24 hours
+- Cleanup runs daily at midnight (cron job)
+- Manual cleanup can be triggered if needed
 
 ## Data Models
 
