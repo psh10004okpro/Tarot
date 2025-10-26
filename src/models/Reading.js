@@ -135,6 +135,24 @@ const readingSchema = new mongoose.Schema({
     type: String,
     maxlength: [1000, 'Notes must be less than 1000 characters'],
   },
+
+  // Social & Sharing Statistics
+  viewsCount: {
+    type: Number,
+    default: 0,
+  },
+  sharesCount: {
+    type: Number,
+    default: 0,
+  },
+  likesCount: {
+    type: Number,
+    default: 0,
+  },
+  commentsCount: {
+    type: Number,
+    default: 0,
+  },
 }, {
   timestamps: true,
 });
@@ -145,6 +163,9 @@ readingSchema.index({ spread: 1 });
 readingSchema.index({ questionCategory: 1 });
 readingSchema.index({ isFavorite: 1 });
 readingSchema.index({ isPublic: 1 });
+readingSchema.index({ isPublic: 1, createdAt: -1 }); // Public readings sorted by date
+readingSchema.index({ isPublic: 1, viewsCount: -1 }); // Public readings sorted by popularity
+readingSchema.index({ isPublic: 1, likesCount: -1 }); // Public readings sorted by likes
 
 // Validate cards array length matches spread's cardCount
 readingSchema.pre('save', async function (next) {

@@ -322,6 +322,194 @@ const submitFeedback = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Get public readings (shared by users)
+ * @route   GET /api/v1/readings/public
+ * @access  Public
+ */
+const getPublicReadings = async (req, res, next) => {
+  try {
+    const {
+      page = 1,
+      limit = 20,
+      sort = 'recent', // recent, popular, liked
+      category,
+    } = req.query;
+
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    // Build query
+    const query = { isPublic: true };
+    if (category) {
+      query.questionCategory = category;
+    }
+
+    // Build sort
+    let sortOptions = {};
+    switch (sort) {
+      case 'popular':
+        sortOptions = { viewsCount: -1, createdAt: -1 };
+        break;
+      case 'liked':
+        sortOptions = { likesCount: -1, createdAt: -1 };
+        break;
+      case 'recent':
+      default:
+        sortOptions = { createdAt: -1 };
+        break;
+    }
+
+    // Execute query
+    const readings = await Reading.find(query)
+      .populate('user', 'username profile.displayName')
+      .populate('spread', 'name nameKo nameShort difficulty')
+      .populate('cardsDrawn.card', 'name nameKo nameShort number imageUrl')
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(limitNum)
+      .lean();
+
+    // Get total count
+    const total = await Reading.countDocuments(query);
+
+    res.status(200).json({
+      success: true,
+      count: readings.length,
+      total,
+      page: pageNum,
+      pages: Math.ceil(total / limitNum),
+      data: readings,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Get single public reading (with view count increment)
+ * @route   GET /api/v1/readings/shared/:id
+ * @access  Public
+ */
+const getSharedReading = async (req, res, next) => {
+  try {
+    const reading = await Reading.findById(req.params.id)
+      .populate('user', 'username profile.displayName profile.bio')
+      .populate('spread', 'name nameKo nameShort description cardCount positions')
+      .populate('cardsDrawn.card');
+
+    if (!reading) {
+      return res.status(404).json({
+        success: false,
+        error: 'Reading not found',
+      });
+    }
+
+    // Check if reading is public
+    if (!reading.isPublic) {
+      return res.status(403).json({
+        success: false,
+        error: 'This reading is not public',
+      });
+    }
+
+    // Increment view count (async, don't wait)
+    Reading.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { viewsCount: 1 } },
+      { new: false }
+    ).exec();
+
+    res.status(200).json({
+      success: true,
+      data: reading,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Toggle reading visibility (public/private)
+ * @route   PUT /api/v1/readings/:id/visibility
+ * @access  Private
+ */
+const toggleReadingVisibility = async (req, res, next) => {
+  try {
+    const reading = await Reading.findById(req.params.id);
+
+    if (!reading) {
+      return res.status(404).json({
+        success: false,
+        error: 'Reading not found',
+      });
+    }
+
+    // Check ownership
+    if (reading.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to modify this reading',
+      });
+    }
+
+    // Toggle visibility
+    reading.isPublic = req.body.isPublic !== undefined ? req.body.isPublic : !reading.isPublic;
+    await reading.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Reading is now ${reading.isPublic ? 'public' : 'private'}`,
+      data: {
+        id: reading._id,
+        isPublic: reading.isPublic,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Increment reading share count
+ * @route   POST /api/v1/readings/:id/share
+ * @access  Public
+ */
+const incrementReadingShare = async (req, res, next) => {
+  try {
+    const reading = await Reading.findById(req.params.id);
+
+    if (!reading) {
+      return res.status(404).json({
+        success: false,
+        error: 'Reading not found',
+      });
+    }
+
+    if (!reading.isPublic) {
+      return res.status(403).json({
+        success: false,
+        error: 'Cannot share private reading',
+      });
+    }
+
+    // Increment share count
+    reading.sharesCount += 1;
+    await reading.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Share count incremented',
+      data: {
+        sharesCount: reading.sharesCount,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createReading,
   getMyReadings,
@@ -329,4 +517,9 @@ module.exports = {
   updateReading,
   deleteReading,
   submitFeedback,
+  // Public sharing functions
+  getPublicReadings,
+  getSharedReading,
+  toggleReadingVisibility,
+  incrementReadingShare,
 };
