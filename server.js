@@ -19,6 +19,7 @@ const spreadRoutes = require('./src/routes/spreads');
 const readingRoutes = require('./src/routes/readings');
 const userRoutes = require('./src/routes/users');
 const voiceRoutes = require('./src/routes/voice');
+const commentRoutes = require('./src/routes/comments');
 
 /**
  * Unwoldam Studio - Tarot Card AI API
@@ -134,6 +135,7 @@ app.use('/api/v1/spreads', spreadRoutes);
 app.use('/api/v1/readings', readingRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/voice', voiceRoutes);
+app.use('/api/v1/comments', commentRoutes);
 
 // Apply specific rate limiters
 const authRouter = express.Router();
