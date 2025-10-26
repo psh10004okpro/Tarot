@@ -6,6 +6,12 @@ const {
   updatePassword,
   getStats,
 } = require('../controllers/userController');
+const {
+  getUserDashboard,
+  getCategoryStats,
+  getCardFrequency,
+  getReadingPatterns,
+} = require('../controllers/dashboardController');
 const { protect } = require('../middleware/auth');
 const { validate } = require('../middleware/validation');
 const { updateProfileSchema, updatePasswordSchema } = require('../middleware/validation');
@@ -42,5 +48,37 @@ router.put('/password', protect, validate(updatePasswordSchema), updatePassword)
  * @access  Private
  */
 router.get('/stats', protect, getStats);
+
+/**
+ * Dashboard Routes
+ */
+
+/**
+ * @route   GET /api/v1/users/dashboard
+ * @desc    Get comprehensive user dashboard
+ * @access  Private
+ */
+router.get('/dashboard', protect, getUserDashboard);
+
+/**
+ * @route   GET /api/v1/users/dashboard/categories
+ * @desc    Get detailed category statistics
+ * @access  Private
+ */
+router.get('/dashboard/categories', protect, getCategoryStats);
+
+/**
+ * @route   GET /api/v1/users/dashboard/cards
+ * @desc    Get card frequency analysis
+ * @access  Private
+ */
+router.get('/dashboard/cards', protect, getCardFrequency);
+
+/**
+ * @route   GET /api/v1/users/dashboard/patterns
+ * @desc    Get time-based reading patterns
+ * @access  Private
+ */
+router.get('/dashboard/patterns', protect, getReadingPatterns);
 
 module.exports = router;
