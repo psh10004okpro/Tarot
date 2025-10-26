@@ -182,9 +182,69 @@ const getStats = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Export user's reading history
+ * @route   GET /api/v1/users/export?format=pdf|csv|json
+ * @access  Private
+ */
+const exportReadings = async (req, res, next) => {
+  try {
+    const { format = 'pdf' } = req.query;
+    const exportService = require('../services/exportService');
+    const Reading = require('../models/Reading');
+
+    // Fetch all user readings with populated data
+    const readings = await Reading.find({ user: req.user.id })
+      .populate('spread', 'name nameKo')
+      .populate('cardsDrawn.card', 'name nameKo number')
+      .sort({ createdAt: -1 });
+
+    if (readings.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'No readings found to export',
+      });
+    }
+
+    if (format === 'csv') {
+      const csv = exportService.generateCSV(readings);
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename=tarot-readings-${Date.now()}.csv`
+      );
+      return res.send(csv);
+    } else if (format === 'json') {
+      const json = exportService.generateJSON(readings);
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename=tarot-readings-${Date.now()}.json`
+      );
+      return res.send(json);
+    } else if (format === 'pdf') {
+      const pdfBuffer = await exportService.generatePDF(req.user, readings);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename=tarot-readings-${Date.now()}.pdf`
+      );
+      return res.send(pdfBuffer);
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid format. Use pdf, csv, or json',
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   updatePassword,
   getStats,
+  exportReadings,
 };

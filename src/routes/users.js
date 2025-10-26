@@ -5,6 +5,7 @@ const {
   updateProfile,
   updatePassword,
   getStats,
+  exportReadings,
 } = require('../controllers/userController');
 const {
   getUserDashboard,
@@ -80,5 +81,12 @@ router.get('/dashboard/cards', protect, getCardFrequency);
  * @access  Private
  */
 router.get('/dashboard/patterns', protect, getReadingPatterns);
+
+/**
+ * @route   GET /api/v1/users/export
+ * @desc    Export reading history (PDF/CSV/JSON)
+ * @access  Private
+ */
+router.get('/export', protect, exportReadings);
 
 module.exports = router;
