@@ -191,6 +191,33 @@ npm run lint:fix
 - `POST /api/v1/voice/reading` - Full voice tarot reading (protected, multipart/form-data)
 - `POST /api/v1/voice/reading/:id/regenerate` - Regenerate audio for existing reading (protected)
 
+### Public Readings & Social
+- `GET /api/v1/readings/public` - Get public readings feed (public, supports pagination/sorting)
+- `GET /api/v1/readings/shared/:id` - Get single public reading (public, increments view count)
+- `PUT /api/v1/readings/:id/visibility` - Toggle reading public/private (protected)
+- `POST /api/v1/readings/:id/share` - Increment share count (public)
+- `POST /api/v1/readings/:id/like` - Like a reading (protected)
+- `DELETE /api/v1/readings/:id/like` - Unlike a reading (protected)
+- `GET /api/v1/readings/:id/likes` - Get users who liked (public)
+- `GET /api/v1/readings/:id/like/status` - Check if user liked (protected)
+- `POST /api/v1/readings/:id/comments` - Create comment (protected)
+- `GET /api/v1/readings/:id/comments` - Get comments (public, supports pagination/sorting)
+- `PUT /api/v1/comments/:id` - Update own comment (protected)
+- `DELETE /api/v1/comments/:id` - Delete own comment (protected)
+- `POST /api/v1/comments/:id/like` - Like a comment (protected)
+- `DELETE /api/v1/comments/:id/like` - Unlike a comment (protected)
+
+### Analytics & Dashboard
+- `GET /api/v1/users/dashboard` - Get comprehensive dashboard (protected)
+- `GET /api/v1/users/dashboard/categories` - Get category statistics (protected)
+- `GET /api/v1/users/dashboard/cards` - Get card frequency analysis (protected)
+- `GET /api/v1/users/dashboard/patterns` - Get time-based patterns (protected)
+
+### Data Export
+- `GET /api/v1/users/export?format=pdf` - Export readings as PDF (protected)
+- `GET /api/v1/users/export?format=csv` - Export readings as CSV (protected)
+- `GET /api/v1/users/export?format=json` - Export readings as JSON (protected)
+
 ### System
 - `GET /health` - Health check
 - `GET /` - API information
@@ -270,13 +297,41 @@ npm run lint:fix
 - Multipart file upload handling
 - Voice reading regeneration for existing readings
 
-### Phase 6: Advanced Features (Next)
-- Image upload for cards
-- Public reading sharing
-- User analytics dashboard
-- Email notifications
-- Reading history export
-- Social features (comments, likes)
+### Phase 6: Social & Community Features ✅ Completed
+- **Public Reading Sharing**: Share readings with community
+  - Public reading feed with sorting (recent/popular/liked)
+  - View counting and share tracking
+  - Public/private visibility toggle
+- **Social Features**: Likes and comments
+  - Like/unlike public readings
+  - Comment on public readings with moderation
+  - Comment editing and soft delete
+  - Like comments
+  - Social engagement tracking
+- **Email Notifications**: Automated user engagement
+  - Welcome email on registration
+  - Comment notifications
+  - Like notifications
+  - Configurable email preferences
+  - Beautiful HTML email templates
+- **User Analytics Dashboard**: Personal insights
+  - Comprehensive statistics (total readings, favorites, engagement)
+  - Category breakdown with ratings
+  - Most frequent cards analysis
+  - Monthly reading trends (12 months)
+  - Time-based patterns (day/hour)
+- **Reading History Export**: Data portability
+  - PDF export with professional formatting
+  - CSV export for spreadsheet analysis
+  - JSON export for data backup
+  - GDPR compliance
+
+### Phase 7: Advanced Features (Future)
+- Image upload for custom card decks
+- Real-time notifications (WebSocket)
+- Advanced search and filtering
+- Reading recommendations based on AI
+- Mobile app (React Native)
 
 ## MongoDB Atlas Setup (Cloud Database)
 
