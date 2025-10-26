@@ -95,14 +95,30 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/images', express.static('public/images'));
 app.use('/audio', express.static('public/audio'));
 
-// Health Check Route
-app.get('/health', (req, res) => {
-  res.status(200).json({
+// Health Check Route (with MongoDB status)
+app.get('/health', async (req, res) => {
+  const mongoose = require('mongoose');
+
+  const dbStatus = {
+    connected: mongoose.connection.readyState === 1,
+    state: ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState],
+    host: mongoose.connection.host || 'unknown',
+    database: mongoose.connection.name || 'unknown',
+  };
+
+  const healthStatus = {
     success: true,
     message: 'Unwoldam API is running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-  });
+    database: dbStatus,
+    uptime: process.uptime(),
+  };
+
+  // Return 503 if database is not connected
+  const statusCode = dbStatus.connected ? 200 : 503;
+
+  res.status(statusCode).json(healthStatus);
 });
 
 // API Documentation
