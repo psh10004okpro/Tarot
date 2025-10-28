@@ -8,6 +8,7 @@ const Card = require('../src/models/Card');
 const Spread = require('../src/models/Spread');
 const User = require('../src/models/User');
 const logger = require('../src/utils/logger');
+const { transformAllCards } = require('./transformCardData');
 
 /**
  * Database Seeding Script
@@ -15,13 +16,19 @@ const logger = require('../src/utils/logger');
  */
 
 // Read JSON data files
-const cardsData = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../data/tarot_cards_major_arcana.json'), 'utf-8')
+const rawCardsData = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '../data/tarot_cards_en_keys.json'), 'utf-8')
 );
 
-const spreadsData = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../data/tarot_spreads.json'), 'utf-8')
-);
+// Transform card data to match model schema
+const cardsData = transformAllCards(rawCardsData);
+
+// Read spreads data if file exists
+let spreadsData = [];
+const spreadsFilePath = path.join(__dirname, '../data/tarot_spreads.json');
+if (fs.existsSync(spreadsFilePath)) {
+  spreadsData = JSON.parse(fs.readFileSync(spreadsFilePath, 'utf-8'));
+}
 
 /**
  * Connect to MongoDB
@@ -70,6 +77,10 @@ const seedCards = async () => {
  */
 const seedSpreads = async () => {
   try {
+    if (spreadsData.length === 0) {
+      logger.info('No spreads data to seed');
+      return [];
+    }
     const spreads = await Spread.insertMany(spreadsData);
     logger.info(`${spreads.length} spreads seeded successfully`);
     return spreads;
@@ -185,6 +196,7 @@ const seedDatabase = async () => {
     console.log('\nTest Accounts:');
     console.log('User - email: test@unwoldam.com, password: password123');
     console.log('Admin - email: admin@unwoldam.com, password: admin123');
+    console.log('\nNote: Using tarot_cards_en_keys.json with 78 cards');
     console.log('=================================\n');
 
     process.exit(0);

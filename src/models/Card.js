@@ -3,32 +3,38 @@ const mongoose = require('mongoose');
 /**
  * Tarot Card Schema
  * Represents individual tarot cards with their meanings and symbolism
+ * Updated to match tarot_cards_en_keys.json structure
  */
 const cardSchema = new mongoose.Schema({
-  nameShort: {
+  // Card identification
+  card: {
     type: String,
-    required: [true, 'Card short name is required'],
+    required: [true, 'Card identifier is required'],
     unique: true,
     trim: true,
+    // Examples: "0. THE FOOL / 바보(광대) / 메이저 아르카나"
+  },
+  nameShort: {
+    type: String,
+    trim: true,
     uppercase: true,
-    // Examples: "AR00", "CU01", "WA14"
+    index: true,
+    // Examples: "AR00", "CU01", "WA14" - generated from card info
   },
   name: {
     type: String,
-    required: [true, 'Card name is required'],
     trim: true,
-    // Examples: "The Fool", "Ace of Cups"
+    // Examples: "The Fool", "Ace of Cups" - extracted from card field
   },
   nameKo: {
     type: String,
-    required: [true, 'Korean card name is required'],
     trim: true,
-    // Examples: "광대", "컵 에이스"
+    // Examples: "광대", "컵 에이스" - extracted from card field
   },
   arcana: {
     type: String,
     enum: ['Major', 'Minor'],
-    required: true,
+    // Extracted from card field
   },
   suit: {
     type: String,
@@ -37,74 +43,88 @@ const cardSchema = new mongoose.Schema({
   },
   number: {
     type: Number,
-    required: [true, 'Card number is required'],
     min: 0,
     max: 78,
+    index: true,
+    // Extracted from card field (0-21 for Major, 1-14 for Minor suits)
   },
 
-  // Meanings and Keywords
-  meaningUpright: [{
+  // Visual Description
+  imageDescription: {
     type: String,
-    trim: true,
-  }],
-  meaningReversed: [{
-    type: String,
-    trim: true,
-  }],
-  keywordsUpright: [{
-    type: String,
-    trim: true,
-  }],
-  keywordsReversed: [{
+    // Korean description of the card imagery
+  },
+
+  // Keywords
+  keywords: [{
     type: String,
     trim: true,
   }],
 
-  // Descriptions
-  descriptionShort: {
+  // Life Aspect Interpretations (All in Korean)
+  love: {
     type: String,
-    maxlength: 200,
+    // 연애 운세 해석
   },
-  descriptionLong: {
+  relationship: {
     type: String,
+    // 인간관계 해석
+  },
+  finance: {
+    type: String,
+    // 금전운 해석
+  },
+  educationCareerBusiness: {
+    type: String,
+    // 학업/직업/사업 해석
+  },
+  reunion: {
+    type: String,
+    // 재회 해석
+  },
+  contract: {
+    type: String,
+    // 계약 해석
+  },
+  travelMoving: {
+    type: String,
+    // 여행/이동 해석
+  },
+  jobChange: {
+    type: String,
+    // 이직 해석
+  },
+  health: {
+    type: String,
+    // 건강 해석
+  },
+  places: {
+    type: String,
+    // 장소 관련 해석
+  },
+  mood: {
+    type: String,
+    // 기분/감정 상태
   },
 
-  // Symbolism and Elements
-  element: {
-    type: String,
-    enum: ['Fire', 'Water', 'Air', 'Earth', null],
-    default: null,
-  },
-  symbolism: [{
-    type: String,
-    trim: true,
-  }],
-
-  // Guidance and Questions
-  questionsToAsk: [{
-    type: String,
-    trim: true,
-  }],
-  affirmation: {
-    type: String,
-  },
-
-  // Korean Market Specific
-  fortunetellingKo: [{
-    type: String,
-    trim: true,
-  }],
-  relatedHanja: {
-    type: String,
-    trim: true,
-  },
-
-  // Astrological and Mystical
-  astrology: {
-    type: String,
-  },
+  // Symbolism and Mysticism
   numerology: {
     type: String,
+    // 숫자학적 의미
+  },
+  symbolism: {
+    type: String,
+    // 상징 해석
+  },
+
+  // Guidance
+  advice: {
+    type: String,
+    // 조언
+  },
+  caution: {
+    type: String,
+    // 주의사항
   },
 
   // Media
@@ -122,10 +142,11 @@ const cardSchema = new mongoose.Schema({
 });
 
 // Indexes for efficient queries
-// Note: nameShort index is already created by 'unique: true' option
 cardSchema.index({ arcana: 1 });
 cardSchema.index({ suit: 1, number: 1 });
-cardSchema.index({ keywordsUpright: 'text', keywordsReversed: 'text' });
+cardSchema.index({ keywords: 'text' });
+cardSchema.index({ nameShort: 1 });
+cardSchema.index({ card: 1 });
 
 // Pre-save hook to update timestamps
 cardSchema.pre('save', function (next) {
