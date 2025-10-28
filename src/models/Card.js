@@ -142,11 +142,10 @@ const cardSchema = new mongoose.Schema({
 });
 
 // Indexes for efficient queries
+// Note: nameShort and card indexes are already created by 'index: true' and 'unique: true' options
 cardSchema.index({ arcana: 1 });
 cardSchema.index({ suit: 1, number: 1 });
 cardSchema.index({ keywords: 'text' });
-cardSchema.index({ nameShort: 1 });
-cardSchema.index({ card: 1 });
 
 // Pre-save hook to update timestamps
 cardSchema.pre('save', function (next) {
